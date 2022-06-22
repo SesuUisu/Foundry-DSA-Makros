@@ -8,7 +8,7 @@ main();
 async function main() {
 
     //Überprüfe, ob ein Token ausgewählt wurde
-    if (canvas.tokens.controlled.length == 0 || canvas.tokens.controlled.length > 1) {
+    if (canvas.tokens.controlled.length === 0 || canvas.tokens.controlled.length > 1) {
         ui.notifications.error("Bitte einen Token auswählen.");
         return;
     }
@@ -16,31 +16,27 @@ async function main() {
     //Charakter Werte
     let tokenName = token.actor.data.name;
 
-    let lepValue = token.actor.data.data.base.resources.vitality.value;
-    let lepMax = token.actor.data.data.base.resources.vitality.max;
-    let aspValue = token.actor.data.data.base.resources.astralEnergy.value;
-    let aspMax = token.actor.data.data.base.resources.astralEnergy.max;
-    let kapValue = token.actor.data.data.base.resources.karmicEnergy.value;
-    let kapMax = token.actor.data.data.base.resources.karmicEnergy.max;
-    let aupValue = token.actor.data.data.base.resources.endurance.value;
-    let aupMax = token.actor.data.data.base.resources.endurance.max;
+    const lepValue = token.actor.data.data.base.resources.vitality.value;
+    const lepMax = token.actor.data.data.base.resources.vitality.max;
+    const aspValue = token.actor.data.data.base.resources.astralEnergy.value;
+    const aspMax = token.actor.data.data.base.resources.astralEnergy.max;
+    const kapValue = token.actor.data.data.base.resources.karmicEnergy.value;
+    const kapMax = token.actor.data.data.base.resources.karmicEnergy.max;
+    const aupValue = token.actor.data.data.base.resources.endurance.value;
+    const aupMax = token.actor.data.data.base.resources.endurance.max;
 
-    let constValue = token.actor.data.data.base.basicAttributes.constitution.value;
-    let intuValue = token.actor.data.data.base.basicAttributes.intuition.value;
-    let cleverValue = token.actor.data.data.base.basicAttributes.cleverness.value;
+    const constValue = token.actor.data.data.base.basicAttributes.constitution.value;
+    const intuValue = token.actor.data.data.base.basicAttributes.intuition.value;
+    const cleverValue = token.actor.data.data.base.basicAttributes.cleverness.value;
 
+    const showLep = lepValue < lepMax;
+    const showAsp = aspMax > 0 && aspValue < aspMax;
+    const showKap = kapMax > 0 && kapValue < kapMax;
 
     ////Vor-/Nachtteile/SF
-    let verwohnt = token.actor.items.find(item => item.data.name == "Verwöhnt");
-    let schnHeil = token.actor.items.find(item => item.data.name == "Schnelle Heilung");
-    let schlHeil = token.actor.items.find(item => item.data.name == "Schlechte Regeneration");
-    let astraReg = token.actor.items.find(item => item.data.name == "Astrale Regeneration");
-    let astraBlock = token.actor.items.find(item => item.data.name == "Astraler Block");
-    let sfReg1 = token.actor.items.find(item => item.data.name == "Regeneration I");
-    let sfReg2 = token.actor.items.find(item => item.data.name == "Regeneration II");
-    let sfReg3 = token.actor.items.find(item => item.data.name == "Meisterliche Regeneration");
-    let schlafwandler = token.actor.items.find(item => item.data.name == "Schlafwandler");
-    let schlafstorung = token.actor.items.find(item => item.data.name == "Schlafstörungen");
+    const verwohnt = token.actor.items.find(item => item.data.name === "Verwöhnt");
+    const schlafwandler = token.actor.items.find(item => item.data.name === "Schlafwandler");
+    const schlafstorung = token.actor.items.find(item => item.data.name === "Schlafstörungen");
 
 
     //Dialog-input
@@ -55,45 +51,92 @@ async function main() {
 
 
     ////Number inputs
-    let headerDialog = "<h2> Nächtliche Regeneration von<br><i>" + tokenName + "</i></h2>";
-    let lepModDialog = divFlexStart + "LeP-Modifikator <input id='lepFillMod'" + divInputNumber + divFlexEnd;
-    let aspModDialog = divFlexStart + "AsP-Modifikator <input id='aspFillMod'" + divInputNumber + divFlexEnd;
-    let kapModDialog = divFlexStart + "KaP-Modifikator <input id='kapFillMod'" + divInputNumber + divFlexEnd;
-    let constModDialog = divFlexStart + "KO-Modifikator <input id='constFillMod'" + divInputNumber + divFlexEnd;
-    let intuModDialog = divFlexStart + "IN-Modifikator <input id='intuFillMod'" + divInputNumber + divFlexEnd;
-
+    const headerDialog = "<h2> Nächtliche Regeneration von<br><i>" + tokenName + "</i></h2>";
+    let modDialog = "";
+    if (showLep) {
+        modDialog += divFlexStart + "LeP-Modifikator <input id='lepFillMod'" + divInputNumber + divFlexEnd;
+    }
+    if (showAsp) {
+        modDialog += divFlexStart + "AsP-Modifikator <input id='aspFillMod'" + divInputNumber + divFlexEnd;
+    }
+    if (showKap) {
+        modDialog += divFlexStart + "KaP-Modifikator <input id='kapFillMod'" + divInputNumber + divFlexEnd;
+    }
+    let attrModDialog = "";
+    if (showLep) {
+        attrModDialog += divFlexStart + "KO-Modifikator <input id='constFillMod'" + divInputNumber + divFlexEnd;
+    }
+    if (showAsp) {
+        attrModDialog += divFlexStart + "IN-Modifikator <input id='intuFillMod'" + divInputNumber + divFlexEnd;
+    }
     ////Checkbox inputs
-    let unruheDialog = divFlexStart + "Ruhestörung <input id='unruhe'" + divInputBox + divInputUnchecked + divFlexEnd;
-    let wacheDialog = divFlexStart + "Wache gehalten <input id='wache'" + divInputBox + divInputUnchecked + divFlexEnd;
-    let krankDialog = divFlexStart + "Erkrankt <input id='krank'" + divInputBox + divInputUnchecked + divFlexEnd;
+    const unruheDialog = divFlexStart + "Ruhestörung <input id='unruhe'" + divInputBox + divInputUnchecked + divFlexEnd;
+    const wacheDialog = divFlexStart + "Wache gehalten <input id='wache'" + divInputBox + divInputUnchecked + divFlexEnd;
 
     ////Dropdown inputs
-    let platzDialog = divFlexStart + `
+    const platzDialog = divFlexStart + `
 		<form action"#">
 			<label for="platz">Schlafplatz</label>
 			<select name="schlafplatz" id="platz" style="float:right">
-				<option value="worse">schlechter Lagerplatz -1/-1</option>
-				<option value="low" selected>Schlafsaal +0/+0</option>
-				<option value="mid">Einzelzimmer +1/+1</option>
-				<option value="high">Suite +2/+2</option>
+				<option value="-1">schlechter Lagerplatz -1/-1</option>
+				<option value="0" selected>Schlafsaal +0/+0</option>
+				<option value="1">Einzelzimmer +1/+1</option>
+				<option value="2">Suite +2/+2</option>
 			</select>
 		</form>
 	` + divFlexEnd;
 
+    let regenerationDialog = headerDialog + modDialog + hr + attrModDialog;
     ////Vor-/Nachtteile/SF Input mit autofill
+    // Verwöhnt
+    const verwohntDialog = createVerwohntDialog(verwohnt);
+    regenerationDialog += verwohntDialog;
 
+    if (showLep) {
+        // Schlechte Regeneration und Schnelle Heilung
+        const heilDialog = createHeilDialog(token);
+        regenerationDialog += hr + heilDialog;
+    }
+    if (showAsp) {
+        const aspRegDialog = createAspRegDialog(token);
+        regenerationDialog += hr + aspRegDialog;
+    }
+    regenerationDialog += hr + platzDialog + unruheDialog + wacheDialog;
     // Schlafwandler
-    let wandelCheck = divInputUnchecked;
-    let wandelOutput = "";
     if (schlafwandler) {
-        let schlafRoll = new Roll('1d20').roll({async: true});
-        const schlafwandler_result = schlafRoll.then(roll => {
-            const rollWandelValue = roll.dice[0].values[0];
-            let wandelCheck = divInputUnchecked;
-            let wandelOutput = "";
-            roll.toMessage({
-                flavor: "Schlafwandler",
-                speaker: ChatMessage.getSpeaker({token: token.document})
+        regenerationDialog += createWandelDialog(schlafwandler);
+    }
+    // Schlafstörung
+    if (schlafstorung) {
+        regenerationDialog += createInsomniaDialog(schlafstorung);
+    }
+    const krankDialog = divFlexStart + "Erkrankt <input id='krank'" + divInputBox + divInputUnchecked + divFlexEnd;
+    regenerationDialog += hr + krankDialog;
+    //Dialog-Fenster
+    new Dialog({
+        title: "Nächtliche Regeneration",
+        content: regenerationDialog,
+        buttons: {
+            close: {
+                icon: '<i class="fas fa-times"></i>', label: "Schließen"
+            }, accept: {
+                icon: '<i class="fas fa-check"></i>', label: "Würfeln", callback: htmlCallback
+            }
+        },
+        default: "accept",
+        render: () => console.log("Regeneration wurde geöffnet"),
+        close: () => console.log("Regeneration wurde geschlossen")
+    }).render(true);
+
+
+    function createWandelDialog(schlafwandler) {
+        let wandelCheck = divInputUnchecked;
+        let wandelOutput = "";
+        if (schlafwandler) {
+            let schlafRoll = new Roll('1d20').roll({async: false});
+            const rollWandelValue = schlafRoll.terms[0].results[0].result;
+            schlafRoll.toMessage({
+                flavor: "Schlafwandler", speaker: ChatMessage.getSpeaker({token: token.document})
             });
             if (rollWandelValue <= 5) {
                 wandelCheck = divInputChecked;
@@ -103,27 +146,25 @@ async function main() {
                 wandelCheck = divInputUnchecked;
                 wandelOutput = "<span style='color:#888;'> w20: " + rollWandelValue + "</span>";
             }
-            return [wandelCheck, wandelOutput];
-        });
-        [wandelCheck, wandelOutput] = await schlafwandler_result;
-    }
-    let wandelDialog = divFlexStart + "Schlafwandeln <input id='wandel'" + divInputBox + wandelCheck + wandelOutput + divFlexEnd;
 
-    // Schlafstörung
-    let insomniaCheck = divInputUnchecked;
-    let insomniaDialogOutput = "";
-    if (schlafstorung) {
-        let schlafstorungRoll = new Roll('1d20').roll({async: true});
-        const schlafstorung_result = schlafstorungRoll.then(roll => {
-            const rollStorungValue = roll.dice[0].values[0];
+        }
+        return divFlexStart + "Schlafwandeln <input id='wandel'" + divInputBox + wandelCheck + wandelOutput + divFlexEnd;
+    }
+
+    function createInsomniaDialog(schlafstorung) {
+        let insomniaCheck = divInputUnchecked;
+        let insomniaDialogOutput = "";
+        if (schlafstorung) {
+            let schlafstorungRoll = new Roll('1d20').roll({async: false});
+            const rollStorungValue = schlafstorungRoll.terms[0].results[0].result;
             const schlafstorungValue = schlafstorung.data.data.value;
-            roll.toMessage({
+            schlafstorungRoll.toMessage({
                 flavor: "Schlafstörung " + schlafstorungValue,
                 speaker: ChatMessage.getSpeaker({token: token.document})
             });
             insomniaCheck = divInputUnchecked;
             insomniaDialogOutput = " " + schlafstorungValue + "<span style='color:#888;'> w20: " + rollStorungValue + "</span>";
-            if (schlafstorungValue == 1) {
+            if (schlafstorungValue === 1) {
                 if (rollStorungValue <= 5) {
                     insomniaCheck = divInputChecked;
                     insomniaDialogOutput = " " + schlafstorungValue + "<span style='color:#800;'> w20: " + rollStorungValue + "</span>";
@@ -136,79 +177,91 @@ async function main() {
                     ui.notifications.warn("Schlafstörung wurde ausgelöst!");
                 }
             }
-            return [insomniaCheck, insomniaDialogOutput];
-        });
-        [insomniaCheck, insomniaDialogOutput] = await schlafstorung_result;
+
+        }
+        return divFlexStart + "Schlafstörung <input id='insomnia'" + divInputBox + insomniaCheck + insomniaDialogOutput + divFlexEnd;
     }
 
-    let insomniaDialog = divFlexStart + "Schlafstörung <input id='insomnia'" + divInputBox + insomniaCheck + insomniaDialogOutput + divFlexEnd;
-
-    // Schlechte Regeneration
-    let schlHeilCheck = schlHeil ? divInputChecked : divInputUnchecked;
-    let schlHeilDialog = divFlexStart + "Schlechte Heilung <input id='badReg'" + divInputBox + schlHeilCheck + divFlexEnd;
-
-    // Astraler Block
-    let astraBlockCheck = astraBlock ? divInputChecked : divInputUnchecked;
-    let astraBlockDialog = divFlexStart + "Astraler Block <input id='astraBlock'" + divInputBox + astraBlockCheck + divFlexEnd;
-
-    // Schnelle Heilung
-    let schnHeilValue = schnHeil?.data.data.value || 0;
-
-    let schnHeilSel0 = "";
-    let schnHeilSel1 = "";
-    let schnHeilSel2 = "";
-    let schnHeilSel3 = "";
-    switch (schnHeilValue) {
-        case 0:
-            schnHeilSel0 = "selected";
-            break;
-        case 1:
-            schnHeilSel1 = "selected";
-            break;
-        case 2:
-            schnHeilSel2 = "selected";
-            break;
-        case 3:
-            schnHeilSel3 = "selected";
-            break;
-    }
-
-    let schnHeilDialog = divFlexStart + ` 
+    function createVerwohntDialog(verwohnt) {
+        const verwohntValue = Number(verwohnt?.data.data.value || 0);
+        return divFlexStart + `
 				<form action"#">
-					<label for="fastReg">Schnelle Heilung</label>
-					<select name="schnelle reg" id="fastReg" style="float:right; width: 50px;">
-						<option value="0"` + schnHeilSel0 + `>0</option>
-						<option value="1"` + schnHeilSel1 + `>I</option>
-						<option value="2"` + schnHeilSel2 + `>II</option>
-						<option value="3"` + schnHeilSel3 + `>III</option>
+					<label for="tantrum">Verwöhnt</label>
+					<select name="tantrumN" id="tantrum" style="float:right; width: 50px;">
+						<option value="0"` + (verwohntValue === 0 ? 'selected' : '') + `>0</option>
+						<option value="1"` + (verwohntValue === 1 ? 'selected' : '') + `>1</option>
+						<option value="2"` + (verwohntValue === 2 ? 'selected' : '') + `>2</option>
+						<option value="3"` + (verwohntValue === 3 ? 'selected' : '') + `>3</option>
+						<option value="4"` + (verwohntValue === 4 ? 'selected' : '') + `>4</option>
+						<option value="5"` + (verwohntValue === 5 ? 'selected' : '') + `>5</option>
+						<option value="6"` + (verwohntValue === 6 ? 'selected' : '') + `>6</option>
+						<option value="7"` + (verwohntValue === 7 ? 'selected' : '') + `>7</option>
+						<option value="8"` + (verwohntValue === 8 ? 'selected' : '') + `>8</option>
+						<option value="9"` + (verwohntValue === 9 ? 'selected' : '') + `>9</option>
+						<option value="10"` + (verwohntValue === 10 ? 'selected' : '') + `>10</option>
+						<option value="11"` + (verwohntValue === 11 ? 'selected' : '') + `>11</option>
+						<option value="12"` + (verwohntValue === 12 ? 'selected' : '') + `>12</option>
 					</select>
 				</form>
 			` + divFlexEnd;
-
-    // Astrale Regeneration
-    let astraRegValue = astraReg?.data.data.value || 0;
-
-
-    let astraRegSel0 = "";
-    let astraRegSel1 = "";
-    let astraRegSel2 = "";
-    let astraRegSel3 = "";
-    switch (astraRegValue) {
-        case 0:
-            astraRegSel0 = "selected";
-            break;
-        case 1:
-            astraRegSel1 = "selected";
-            break;
-        case 2:
-            astraRegSel2 = "selected";
-            break;
-        case 3:
-            astraRegSel3 = "selected";
-            break;
     }
 
-    let astraRegDialog = divFlexStart + ` 
+    function createHeilDialog(token) {
+        let schnHeil = token.actor.items.find(item => item.data.name === "Schnelle Heilung");
+        let schlHeil = token.actor.items.find(item => item.data.name === "Schlechte Regeneration");
+        // Schlechte Regeneration
+        let schlHeilCheck = schlHeil ? divInputChecked : divInputUnchecked;
+        const schlHeilDialog = divFlexStart + "Schlechte Heilung <input id='badReg'" + divInputBox + schlHeilCheck + divFlexEnd;
+        // Schnelle Heilung
+        const schnHeilValue = Number(schnHeil?.data.data.value || 0);
+
+
+        const schnHeilDialog = divFlexStart + ` 
+				<form action"#">
+					<label for="fastReg">Schnelle Heilung</label>
+					<select name="schnelle reg" id="fastReg" style="float:right; width: 50px;">
+						<option value="0"` + (schnHeilValue === 0 ? "selected" : '') + `>0</option>
+						<option value="1"` + (schnHeilValue === 1 ? "selected" : '') + `>I</option>
+						<option value="2"` + (schnHeilValue === 2 ? "selected" : '') + `>II</option>
+						<option value="3"` + (schnHeilValue === 3 ? "selected" : '') + `>III</option>
+					</select>
+				</form>
+			` + divFlexEnd;
+        return schlHeilDialog + schnHeilDialog;
+    }
+
+    function createAspRegDialog(token) {
+        let astraReg = token.actor.items.find(item => item.data.name === "Astrale Regeneration");
+        let astraBlock = token.actor.items.find(item => item.data.name === "Astraler Block");
+        let sfReg1 = token.actor.items.find(item => item.data.name === "Regeneration I");
+        let sfReg2 = token.actor.items.find(item => item.data.name === "Regeneration II");
+        let sfReg3 = token.actor.items.find(item => item.data.name === "Meisterliche Regeneration");
+        // Astraler Block
+        let astraBlockCheck = astraBlock ? divInputChecked : divInputUnchecked;
+        const astraBlockDialog = divFlexStart + "Astraler Block <input id='astraBlock'" + divInputBox + astraBlockCheck + divFlexEnd;
+
+        // Astrale Regeneration
+        let astraRegValue = astraReg?.data.data.value || 0;
+        let astraRegSel0 = "";
+        let astraRegSel1 = "";
+        let astraRegSel2 = "";
+        let astraRegSel3 = "";
+        switch (astraRegValue) {
+            case 0:
+                astraRegSel0 = "selected";
+                break;
+            case 1:
+                astraRegSel1 = "selected";
+                break;
+            case 2:
+                astraRegSel2 = "selected";
+                break;
+            case 3:
+                astraRegSel3 = "selected";
+                break;
+        }
+
+        let astraRegDialog = divFlexStart + ` 
 				<form action"#">
 					<label for="astraReg">Astrale Regeneration</label>
 					<select name="astraRegn" id="astraReg" style="float:right; width: 50px;">
@@ -219,44 +272,38 @@ async function main() {
 					</select>
 				</form>
 			` + divFlexEnd;
-    // Regeneration
-    if (sfReg2 == undefined || sfReg2 == null) {
-        if (sfReg1 == undefined || sfReg1 == null) {
-            var sfRegValue = 0;
-        } else {
-            var sfRegValue = 1;
+        // Regeneration
+        let sfRegValue = 0;
+        if (sfReg3) {
+            sfRegValue = 3;
+        } else if (sfReg2) {
+            sfRegValue = 2;
+        } else if (sfReg1) {
+            sfRegValue = 1;
         }
 
-    } else {
-        if (sfReg3 == undefined || sfReg3 == null) {
-            var sfRegValue = 2;
-        } else {
-            var sfRegValue = 3;
+
+        let sfRegSel0 = "";
+        let sfRegSel1 = "";
+        let sfRegSel2 = "";
+        let sfRegSel3 = "";
+        let sfRegSel4 = "";
+        switch (sfRegValue) {
+            case 0:
+                sfRegSel0 = "selected";
+                break;
+            case 1:
+                sfRegSel1 = "selected";
+                break;
+            case 2:
+                sfRegSel2 = "selected";
+                break;
+            case 3:
+                sfRegSel3 = "selected";
+                break;
         }
 
-    }
-
-    let sfRegSel0 = "";
-    let sfRegSel1 = "";
-    let sfRegSel2 = "";
-    let sfRegSel3 = "";
-    let sfRegSel4 = "";
-    switch (sfRegValue) {
-        case 0:
-            sfRegSel0 = "selected";
-            break;
-        case 1:
-            sfRegSel1 = "selected";
-            break;
-        case 2:
-            sfRegSel2 = "selected";
-            break;
-        case 3:
-            sfRegSel3 = "selected";
-            break;
-    }
-
-    let sfRegDialog = divFlexStart + ` 
+        const sfRegDialog = divFlexStart + ` 
 				<form action"#">
 					<label for="sfReg">Regeneration (SF)</label>
 					<select name="sfRegn" id="sfReg" style="float:right">
@@ -268,609 +315,428 @@ async function main() {
 					</select>
 				</form>
 			` + divFlexEnd;
-
-    let verwohntValue = verwohnt?.data.data.value || 0;
-
-    let verwohntSel0 = "";
-    let verwohntSel1 = "";
-    let verwohntSel2 = "";
-    let verwohntSel3 = "";
-    let verwohntSel4 = "";
-    let verwohntSel5 = "";
-    let verwohntSel6 = "";
-    let verwohntSel7 = "";
-    let verwohntSel8 = "";
-    let verwohntSel9 = "";
-    let verwohntSel10 = "";
-    let verwohntSel11 = "";
-    let verwohntSel12 = "";
-    switch (verwohntValue) {
-        case 0:
-            verwohntSel0 = "selected";
-            break;
-        case 1:
-            verwohntSel1 = "selected";
-            break;
-        case 2:
-            verwohntSel2 = "selected";
-            break;
-        case 3:
-            verwohntSel3 = "selected";
-            break;
-        case 4:
-            verwohntSel4 = "selected";
-            break;
-        case 5:
-            verwohntSel5 = "selected";
-            break;
-        case 6:
-            verwohntSel6 = "selected";
-            break;
-        case 7:
-            verwohntSel7 = "selected";
-            break;
-        case 8:
-            verwohntSel8 = "selected";
-            break;
-        case 9:
-            verwohntSel9 = "selected";
-            break;
-        case 10:
-            verwohntSel10 = "selected";
-            break;
-        case 11:
-            verwohntSel11 = "selected";
-            break;
-        case 12:
-            verwohntSel12 = "selected";
-            break;
+        return astraBlockDialog + astraRegDialog + sfRegDialog;
     }
 
-    let verwohntDialog = divFlexStart + `
-				<form action"#">
-					<label for="tantrum">Verwöhnt</label>
-					<select name="tantrumN" id="tantrum" style="float:right; width: 50px;">
-						<option value="0"` + verwohntSel0 + `>0</option>
-						<option value="1"` + verwohntSel1 + `>1</option>
-						<option value="2"` + verwohntSel2 + `>2</option>
-						<option value="3"` + verwohntSel3 + `>3</option>
-						<option value="4"` + verwohntSel4 + `>4</option>
-						<option value="5"` + verwohntSel5 + `>5</option>
-						<option value="6"` + verwohntSel6 + `>6</option>
-						<option value="7"` + verwohntSel7 + `>7</option>
-						<option value="8"` + verwohntSel8 + `>8</option>
-						<option value="9"` + verwohntSel9 + `>9</option>
-						<option value="10"` + verwohntSel10 + `>10</option>
-						<option value="11"` + verwohntSel11 + `>11</option>
-						<option value="12"` + verwohntSel12 + `>12</option>
-					</select>
-				</form>
-			` + divFlexEnd;
+    function createLepRegOutput(rollLepValue, rollConstValue, html, tantrumInput, placeInput, disturbedInput, wandelInput, insomniaInput, guardingInput, sickInput) {
+        let lepFInput = html.find("#lepFillMod")[0]?.valueAsNumber;
+        let constFInput = html.find("#constFillMod")[0]?.valueAsNumber;
+        const fastRegInput = Number(html.find("#fastReg")[0]?.value || 0);
+        const badRegInput = html.find("#badReg")[0]?.checked || false;
 
+        let lepFOutput;
+        if (isNaN(lepFInput) || lepFInput === "") {
+            lepFInput = 0;
+            lepFOutput = "<span style='color:#800000;'>FEHLER: Manuelle LeP-Eingabe nicht übernommen.</span> <br>";
+        } else {
+            lepFOutput = toSignedString(lepFInput) + " LeP (manuelle Eingabe)<br>";
+        }
+        let constFOutput;
+        if (isNaN(constFInput) || constFInput === "") {
+            constFInput = 0;
+            constFOutput = "<span style='color:#800000;'>FEHLER: Manuelle KO-Eingabe nicht übernommen.</span> <br>";
+        } else {
+            constFOutput = toSignedString(constFInput) + " KO (manuelle Eingabe)<br>";
+        }
+        let rollLepOutput = "+" + rollLepValue + " LeP (1w6)<br>";
+        //Schnelle Heilung
+        const lepRegMod = fastRegInput;
+        const constRegMod = -fastRegInput;
+        let lepRegModOutput = "";
+        let constRegModOutput = "";
+        switch (fastRegInput) {
+            case 1:
+                lepRegModOutput = "+1 LeP (Schnelle Heilung I) <br>";
+                constRegModOutput = "-1 KO (Schnelle Heilung I) <br>";
+                break;
+            case 2:
+                lepRegModOutput = "+2 LeP (Schnelle Heilung II) <br>";
+                constRegModOutput = "-2 KO (Schnelle Heilung II) <br>";
+                break;
+            case 3:
+                lepRegModOutput = "+3 LeP (Schnelle Heilung III) <br>";
+                constRegModOutput = "-3 KO (Schnelle Heilung III) <br>";
+                break;
+        }
+        //Schlechte Regeneration
+        let badLepRegMod = 0;
+        let constBadRegMod = 0;
+        let badLepRegModOutput = "";
+        let constBadRegModOutput = "";
+        if (badRegInput == true) {
+            badLepRegMod = -1;
+            constBadRegMod = 2;
+            badLepRegModOutput = "-1 LeP (Schlechte Regeneration) <br>";
+            constBadRegModOutput = "+2 KO (Schlechte Regeneration) <br>";
+        }
+        //Verwöhnt ff
+        let tantrumOutput = (tantrumInput > 0) ? "+" + tantrumInput + " (Verwöhnt) <br>" : "";
 
-    //Dialog scheme
-    let regenerationDialog = headerDialog + lepModDialog;
-    if (aspMax > 0) {
-        regenerationDialog += aspModDialog;
-    }
-    if (kapMax > 0) {
-        regenerationDialog += kapModDialog;
-    }
-    regenerationDialog += hr + constModDialog;
-    if (aspMax > 0) {
-        regenerationDialog += intuModDialog;
-    }
-    regenerationDialog += verwohntDialog + hr + schnHeilDialog + schlHeilDialog;
-    if (aspMax > 0) {
-        regenerationDialog += hr + sfRegDialog + astraRegDialog + astraBlockDialog;
-    }
-
-    regenerationDialog += hr + platzDialog + unruheDialog + wacheDialog + wandelDialog + insomniaDialog + hr + krankDialog;
-    //Dialog-Fenster
-    new Dialog({
-        title: "Nächtliche Regeneration",
-        content: regenerationDialog,
-        buttons: {
-            close: {
-                icon: '<i class="fas fa-times"></i>',
-                label: "Schließen"
-            },
-            accept: {
-                icon: '<i class="fas fa-check"></i>',
-                label: "Würfeln",
-                callback: (html) => {
-
-                    //Input übernehmen und überprüfen
-                    let lepFInput = html.find("#lepFillMod")[0].valueAsNumber;
-                    let aspFInput = html.find("#aspFillMod")[0]?.valueAsNumber || 0;
-                    let kapFInput = html.find("#kapFillMod")[0]?.valueAsNumber || 0;
-                    let constFInput = html.find("#constFillMod")[0]?.valueAsNumber;
-                    let intuFInput = html.find("#intuFillMod")[0]?.valueAsNumber || 0;
-                    let tantrumInput = Number(html.find("#tantrum")[0].value);
-                    let fastRegInput = Number(html.find("#fastReg")[0].value);
-                    let badRegInput = html.find("#badReg")[0].checked;
-                    let sfRegInput = Number(html.find("#sfReg")[0]?.value || 0);
-                    let astraRegInput = Number(html.find("#astraReg")[0]?.value || 0);
-                    let astraBlockInput = html.find("#astraBlock")[0]?.checked || false;
-                    let placeInput = html.find("#platz")[0].value;
-                    let disturbedInput = html.find("#unruhe")[0].checked;
-                    let guardingInput = html.find("#wache")[0].checked;
-                    let wandelInput = html.find("#wandel")[0].checked;
-                    let insomniaInput = html.find("#insomnia")[0].checked;
-                    let sickInput = html.find("#krank")[0].checked;
-
-                    if (isNaN(lepFInput) || lepFInput === "") {
-                        lepFInput = 0;
-                        var lepFOutput = "<span style='color:#800000;'>FEHLER: Manuelle LeP-Eingabe nicht übernommen.</span> <br>";
-                    } else {
-                        var lepFOutputH = lepFInput + " LeP (manuelle Eingabe)<br>";
-                        if (lepFInput < 0) {
-                            var lepFOutput = lepFOutputH;
-                        } else {
-                            var lepFOutput = "+" + lepFOutputH;
-                        }
-                    }
-
-                    if (isNaN(aspFInput) || aspFInput === "") {
-                        aspFInput = 0;
-                        var aspFOutput = "<span style='color:#800000;'>FEHLER: Manuelle AsP-Eingabe nicht übernommen.</span> <br>";
-                    } else {
-                        var aspFOutputH = aspFInput + " AsP (manuelle Eingabe)<br>";
-                        if (aspFInput < 0) {
-                            var aspFOutput = aspFOutputH;
-                        } else {
-                            var aspFOutput = "+" + aspFOutputH;
-                        }
-                    }
-
-                    if (isNaN(kapFInput) || kapFInput === "") {
-                        kapFInput = 0;
-                        var kapFOutput = "<span style='color:#800000;'>FEHLER: Manuelle KaP-Eingabe nicht übernommen.</span> <br>";
-                    } else {
-                        var kapFOutputH = kapFInput + " KaP (manuelle Eingabe)<br>";
-                        if (kapFInput < 0) {
-                            var kapFOutput = kapFOutputH;
-                        } else {
-                            var kapFOutput = "+" + kapFOutputH;
-                        }
-                    }
-                    if (isNaN(constFInput) || constFInput === "") {
-                        constFInput = 0;
-                        var constFOutput = "<span style='color:#800000;'>FEHLER: Manuelle KO-Eingabe nicht übernommen.</span> <br>";
-                    } else {
-                        var constFOutputH = constFInput + " KO (manuelle Eingabe)<br>";
-                        if (constFInput < 0) {
-                            var constFOutput = constFOutputH;
-                        } else {
-                            var constFOutput = "+" + constFOutputH;
-                        }
-                    }
-                    if (isNaN(intuFInput) || intuFInput === "") {
-                        intuFInput = 0;
-                        var intuFOutput = "<span style='color:#800000;'>FEHLER: Manuelle IN-Eingabe nicht übernommen.</span> <br>";
-                    } else {
-                        var intuFOutputH = intuFInput + " IN (manuelle Eingabe)<br>";
-                        if (intuFInput < 0) {
-                            var intuFOutput = intuFOutputH;
-                        } else {
-                            var intuFOutput = "+" + intuFOutputH;
-                        }
-                    }
-
-
-                    //Würfelwurf
-                    let bigRoll = new Roll('2d6 + 2d20').roll({async: true});
-                    bigRoll.then(roll => {
-
-                        var rollLepValue = roll.dice[0].values[0];
-                        var rollAspValue = roll.dice[0].values[1];
-                        var rollConstValue = roll.dice[1].values[0];
-                        var rollIntuValue = roll.dice[1].values[1];
-                        var rollKapValue = 1;
-
-                        var rollLepOutput = "+" + rollLepValue + " LeP (1w6)<br>";
-                        var rollKapOutput = "+" + rollKapValue + " KaP (Basis)<br>";
-
-                        //Regeneration SF
-                        var sfRegAsp = sfRegInput;
-                        var sfRegOutputH = " AsP (Regeneration (SF))<br>";
-                        var rollAspOutputH = " AsP (1w6)<br>";
-
-                        if (sfRegInput == 3) {
-                            var rollAspValue = Math.round(cleverValue / 3);
-                            var rollAspOutputH = " AsP (KL/3)<br>";
-                        }
-                        ;
-                        if (sfRegInput == 4) {
-                            var rollAspValue = Math.round(intuValue / 3);
-                            var rollAspOutputH = " AsP (IN/3)<br>";
-                            var sfRegAsp = 3;
-                        }
-
-                        if (sfRegInput > 0) {
-                            var sfRegOutput = "+" + sfRegAsp + sfRegOutputH;
-                        } else {
-                            var sfRegOutput = "";
-                        }
-
-                        var rollAspOutput = "+" + rollAspValue + rollAspOutputH;
-
-                        //Schnelle Heilung
-                        switch (fastRegInput) {
-                            case 0:
-                                var lepRegMod = 0;
-                                var constRegMod = 0;
-                                var lepRegModOutput = "";
-                                var constRegModOutput = "";
-                                break;
-                            case 1:
-                                var lepRegMod = 1;
-                                var constRegMod = -1;
-                                var lepRegModOutput = "+1 LeP (Schnelle Heilung I) <br>";
-                                var constRegModOutput = "-1 KO (Schnelle Heilung I) <br>";
-                                break;
-                            case 2:
-                                var lepRegMod = 2;
-                                var constRegMod = -2;
-                                var lepRegModOutput = "+2 LeP (Schnelle Heilung II) <br>";
-                                var constRegModOutput = "-2 KO (Schnelle Heilung II) <br>";
-                                break;
-                            case 3:
-                                var lepRegMod = 3;
-                                var constRegMod = -3;
-                                var lepRegModOutput = "+3 LeP (Schnelle Heilung III) <br>";
-                                var constRegModOutput = "-3 KO (Schnelle Heilung III) <br>";
-                                break;
-                        }
-
-                        //Astrale Regeneration
-                        switch (astraRegInput) {
-                            case 0:
-                                var aspRegMod = 0;
-                                var intuRegMod = 0;
-                                var aspRegModOutput = "";
-                                var intuRegModOutput = "";
-                                break;
-                            case 1:
-                                var aspRegMod = 1;
-                                var intuRegMod = -1;
-                                var aspRegModOutput = "+1 AsP (Astrale Reg. I) <br>";
-                                var intuRegModOutput = "-1 IN (Astrale Reg. I) <br>";
-                                break;
-                            case 2:
-                                var aspRegMod = 2;
-                                var intuRegMod = -2;
-                                var aspRegModOutput = "+2 AsP (Astrale Reg. II) <br>";
-                                var intuRegModOutput = "-2 IN (Astrale Reg. II) <br>";
-                                break;
-                            case 3:
-                                var aspRegMod = 3;
-                                var intuRegMod = -3;
-                                var aspRegModOutput = "+3 AsP (Astrale Reg. III) <br>";
-                                var intuRegModOutput = "-3 IN (Astrale Reg. III) <br>";
-                                break;
-                        }
-                        ;
-
-                        //Astraler Block
-                        if (astraBlockInput == false) {
-                            var aspBlockMod = 0;
-                            var intuAstraBlockMod = 0;
-                            var astraBlockModOutput = "";
-                            var intuAstraBlockModOutput = "";
-                        } else {
-                            var aspBlockMod = -1;
-                            var intuAstraBlockMod = 2;
-                            var astraBlockModOutput = "-1 AsP (Astraler Block) <br>";
-                            var intuAstraBlockModOutput = "+2 IN (Astraler Block) <br>";
-                        }
-                        ;
-
-                        //Schlechte Regeneration
-                        if (badRegInput == false) {
-                            var badLepRegMod = 0;
-                            var constBadRegMod = 0;
-                            var badLepRegModOutput = "";
-                            var constBadRegModOutput = "";
-                        } else {
-                            var badLepRegMod = -1;
-                            var constBadRegMod = 2;
-                            var badLepRegModOutput = "-1 LeP (Schlechte Regeneration) <br>";
-                            var constBadRegModOutput = "+2 KO (Schlechte Regeneration) <br>";
-                        }
-                        ;
-
-                        //Verwöhnt ff
-                        if (tantrumInput != 0) {
-                            var tantrumOutput = "+" + tantrumInput + " Verwöhnt <br>";
-                        } else {
-                            var tantrumOutput = "";
-                        }
-                        ;
-
-                        //Berechnung KO
-                        var constMod = constFInput + constRegMod + constBadRegMod + tantrumInput;
-                        if (constMod < 0) {
-                            var constModOutput = "<i> " + constMod + "</i>";
-                        } else {
-                            var constModOutput = "<i> +" + constMod + "</i>";
-                        }
-                        ;
-                        var constTotal = rollConstValue + constMod;
-
-                        if (constTotal > constValue) {
-                            if (tantrumInput != 0) {
-                                var constBonus = -1;
-                                var constBonusOutput = "-1 LeP (KO misslungen)<br>";
-                            } else {
-                                var constBonus = 0;
-                                var constBonusOutput = "+0 LeP (KO misslungen)<br>";
-                            }
-                            ;
-                            var constOutput = "KO: <span style='color:#800000;'><b>" + rollConstValue + constModOutput + "</b></span> (" + constValue + ")";
-                        } else {
-                            var constBonus = 1;
-                            var constOutput = "KO: <span style='color:#008000;'><b>" + rollConstValue + constModOutput + "</b></span> (" + constValue + ")";
-                            var constBonusOutput = "+1 LeP (KO gelungen)<br>";
-                        }
-                        ;
-
-
-                        //Berechnung IN
-                        var intuMod = intuFInput + intuRegMod + intuAstraBlockMod;
-                        if (intuMod < 0) {
-                            var intuOutputAdd = "<i> " + intuMod + "</i>";
-                        } else {
-                            var intuOutputAdd = "<i> +" + intuMod + "</i>";
-                        }
-
-                        var intuTotal = rollIntuValue + intuMod;
-
-                        if (tantrumInput != 0 && constTotal > constValue) {
-                            var intuBonus = -1;
-                            var intuBonusOutput = "-1 AsP (KO misslungen (Verwöhnt))<br>";
-                            var intuOutput = "IN: <span style='color:#888;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
-                        } else {
-                            if (intuTotal > intuValue) {
-                                var intuBonus = 0;
-                                var intuBonusOutput = "+0 AsP (IN misslungen)<br>";
-                                var intuOutput = "IN: <span style='color:#800000;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
-                            } else {
-                                if (sfRegInput >= 3) {
-                                    var intuBonus = 2;
-                                    var intuBonusOutput = "+2 AsP (IN gelungen)<br>";
-                                } else {
-                                    var intuBonus = 1;
-                                    var intuBonusOutput = "+1 AsP (IN gelungen)<br>";
-                                }
-
-                                var intuOutput = "IN: <span style='color:#008000;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
-                            }
-
-                        }
-
-                        //Schlafstörung und AuP
-                        if (insomniaInput == true) {
-                            var lepInsomnia = -1;
-                            var aspInsomnia = -1;
-                            var lepInsomniaOutput = "-1 LeP (Schlafstörung)<br>";
-                            var aspInsomniaOutput = "-1 AsP (Schlafstörung)<br>";
-                            var aupHadd = Math.round(aupMax * 0.75);
-                            if (aupHadd < aupValue) {
-                                var aupAdd = 0;
-                                var aupDetailOutput = "AuP bereits über 3/4";
-                                var aupUpdate = aupValue;
-                            } else {
-                                var aupadd = aupHadd - aupvalue;
-                                var aupDetailOutput = "AuP über Nacht auf 3/4 regeneriert";
-                                var aupUpdate = aupHadd;
-                            }
-                            ;
-                        } else {
-                            var lepInsomnia = 0;
-                            var aspInsomnia = 0;
-                            var lepInsomniaOutput = "";
-                            var aspInsomniaOutput = "";
-                            var aupAdd = aupMax - aupValue;
-                            var aupUpdate = aupMax;
-                            var aupDetailOutput = "AuP über Nacht voll regeneriert";
-                        }
-                        ;
-                        var aupOutput = "AuP +<b>" + aupAdd + "</b>";
-
-
-                        //Schlafplatz-Modifikator
-                        switch (placeInput) {
-                            case "worse":
-                                var lepPlace = -1;
-                                var aspPlace = -1;
-                                var lepPlaceOutput = "-1 LeP (Schlechter Lagerplatz)<br>";
-                                var aspPlaceOutput = "-1 AsP (Schlechter Lagerplatz)<br>";
-                                break;
-                            case "low":
-                                var lepPlace = 0;
-                                var aspPlace = 0;
-                                var lepPlaceOutput = "+0 LeP (Schlafsaal)<br>";
-                                var aspPlaceOutput = "+0 AsP (Schlafsaal)<br>";
-                                break;
-                            case "mid":
-                                var lepPlace = 1;
-                                var aspPlace = 1;
-                                var lepPlaceOutput = "+1 LeP (Einzelzimmer)<br>";
-                                var aspPlaceOutput = "+1 AsP (Einzelzimmer)<br>";
-                                break;
-                            case "high":
-                                var lepPlace = 2;
-                                var aspPlace = 2;
-                                var lepPlaceOutput = "+2 LeP (Suite)<br>";
-                                var aspPlaceOutput = "+2 AsP (Suite)<br>";
-                                break;
-                        }
-
-                        //Ruhestörung
-                        if (disturbedInput == true) {
-                            var lepDisturbed = -1;
-                            var aspDisturbed = -1;
-                            var lepDisturbedOutput = "-1 LeP (Ruhestörung)<br>";
-                            var aspDisturbedOutput = "-1 AsP (Ruhestörung)<br>";
-                        } else {
-                            var lepDisturbed = 0;
-                            var aspDisturbed = 0;
-                            var lepDisturbedOutput = "";
-                            var aspDisturbedOutput = "";
-                        }
-
-                        //Schlafwandel
-                        if (wandelInput == true) {
-                            var lepWandel = -1;
-                            var aspWandel = -1;
-                            var lepWandelOutput = "-1 LeP (Schlafwandel)<br>";
-                            var aspWandelOutput = "-1 AsP (Schlafwandel)<br>";
-                        } else {
-                            var lepWandel = 0;
-                            var aspWandel = 0;
-                            var lepWandelOutput = "";
-                            var aspWandelOutput = "";
-                        }
-
-                        //Wache
-                        if (guardingInput == true) {
-                            var lepGuarding = -1;
-                            var aspGuarding = -1;
-                            var lepGuardingOutput = "-1 LeP (Wache gehalten)<br>";
-                            var aspGuardingOutput = "-1 AsP (Wache gehalten)<br>";
-                        } else {
-                            var lepGuarding = 0;
-                            var aspGuarding = 0;
-                            var lepGuardingOutput = "";
-                            var aspGuardingOutput = "";
-                        }
-
-                        //Berechnung LeP
-                        let lepAdd = rollLepValue + lepFInput + constBonus + lepRegMod + badLepRegMod + lepPlace + lepDisturbed + lepGuarding + lepWandel + lepInsomnia;
-
-                        if (lepAdd < 0 || sickInput == true) {
-                            lepAdd = 0;
-                        }
-
-                        let newLep = lepValue + lepAdd;
-                        let lepUpdate = newLep;
-
-                        if (newLep > lepMax) {
-                            lepUpdate = lepMax;
-                            lepAdd = lepMax - lepValue;
-                        }
-                        const lepOutput = "LeP +<b>" + lepAdd + "</b>";
-
-                        //Berechnung AsP
-                        let aspAdd = rollAspValue + aspFInput + intuBonus + sfRegAsp + aspRegMod + aspBlockMod + aspPlace + aspDisturbed + aspGuarding + aspWandel + aspInsomnia;
-
-                        if (sickInput == true && aspAdd > 1) {
-                            aspAdd = 1;
-                        }
-
-                        if (aspAdd < 0) {
-                            aspAdd = 0;
-                        }
-
-                        let newAsp = aspValue + aspAdd;
-                        let aspUpdate = newAsp;
-
-                        if (newAsp > aspMax) {
-                            aspUpdate = aspMax;
-                            aspAdd = aspMax - aspValue;
-                        }
-                        const aspOutput = "AsP +<b>" + aspAdd + "</b>";
-
-                        //Berechnung KaP
-                        let kapAdd = rollKapValue + kapFInput;
-                        if (kapAdd < 0) {
-                            kapAdd = 0;
-                        }
-
-                        let newKap = kapValue + kapAdd;
-                        let kapUpdate = newKap;
-                        if (newKap > kapMax) {
-                            kapUpdate = kapMax;
-                            kapAdd = kapMax - kapValue;
-                        }
-                        const kapOutput = "KaP +<b>" + kapAdd + "</b>";
-
-
-                        //Token-Werte aktualisieren
-                        token.actor.update({
-                            'data.base.resources.vitality.value': lepUpdate,
-                            'data.base.resources.astralEnergy.value': aspUpdate,
-                            'data.base.resources.karmicEnergy.value': kapUpdate,
-                            'data.base.resources.endurance.value': aupUpdate
-                        });
-
-                        //Chatausgabe
-                        let lepDetailOutput = rollLepOutput + lepFOutput + constBonusOutput + lepRegModOutput + badLepRegModOutput + lepPlaceOutput + lepDisturbedOutput + lepGuardingOutput + lepWandelOutput + lepInsomniaOutput;
-                        let aspDetailOutput = rollAspOutput + aspFOutput + intuBonusOutput + sfRegOutput + aspRegModOutput + astraBlockModOutput + aspPlaceOutput + aspDisturbedOutput + aspGuardingOutput + aspWandelOutput + aspInsomniaOutput;
-                        const constDetailOutput = constFOutput + constRegModOutput + constBadRegModOutput + tantrumOutput;
-                        const intuDetailOutput = intuFOutput + intuRegModOutput + intuAstraBlockModOutput;
-                        const kapDetailOutput = rollKapOutput + kapFOutput;
-
-                        if (sickInput == true) {
-                            lepDetailOutput = "Charakter ist erkrankt:<br> Keine LeP-Regeneration";
-                            aspDetailOutput = "Charakter ist erkrankt:<br> AsP-Regeneration auf 1 beschränkt";
-                        }
-
-                        const headerMessage = "<table><tr><th colspan=2>Nächtliche Regeneration</th><tr>";
-                        const physMessage = "<tr><td><details closed><summary>"
-                            + lepOutput +
-                            "</summary>"
-                            + lepDetailOutput +
-                            "</details></td><td><details closed><summary>"
-                            + constOutput +
-                            "</summary>"
-                            + constDetailOutput +
-                            "</details></td></tr>";
-                        let message = headerMessage + physMessage;
-                        if (aspMax > 0) {
-                            const astraMessage = "<tr><td><details closed><summary>"
-                                + aspOutput +
-                                "</summary>"
-                                + aspDetailOutput +
-                                "</details></td><td><details closed><summary>"
-                                + intuOutput +
-                                "</summary>"
-                                + intuDetailOutput +
-                                "</details></td></tr>";
-                            message += astraMessage;
-                        }
-
-                        if (kapMax > 0) {
-                            const karmicMessage = "<tr><td><details closed><summary>"
-                                + kapOutput +
-                                "</summary>"
-                                + kapDetailOutput +
-                                "</details></td><td></td></tr>";
-                            message += karmicMessage;
-                        }
-
-                        const enduMessage = "<tr><td><details closed><summary>"
-                            + aupOutput +
-                            "</summary>"
-                            + aupDetailOutput +
-                            "</details></td><td></td></tr></table>";
-
-
-                        message += enduMessage;
-
-                        roll.toMessage({
-                            flavor: message,
-                            speaker: ChatMessage.getSpeaker({token: token.document})
-                        });
-                    });
-                }
+        //Berechnung KO
+        const constMod = constFInput + constRegMod + constBadRegMod + tantrumInput;
+        let constModOutput = "<i> " + toSignedString(constMod) + "</i>";
+        const constTotal = rollConstValue + constMod;
+        let constBonus = 0;
+        let constBonusOutput = "+0 LeP (KO misslungen)<br>";
+        let constOutput;
+        if (constTotal > constValue) {
+            if (tantrumInput > 0) {
+                constBonus = -1;
+                constBonusOutput = "-1 LeP (KO misslungen (Verwöhnt))<br>";
             }
-        },
-        default: "accept",
-        render: html => console.log("Regeneration wurde geöffnet"),
-        close: html => console.log("Regeneration wurde geschlossen")
-    }).render(true);
-    return;
-}
+            constOutput = "KO: <span style='color:#800000;'><b>" + rollConstValue + constModOutput + "</b></span> (" + constValue + ")";
+        } else {
+            constBonus = 1;
+            constOutput = "KO: <span style='color:#008000;'><b>" + rollConstValue + constModOutput + "</b></span> (" + constValue + ")";
+            constBonusOutput = "+1 LeP (KO gelungen)<br>";
+        }
+        //Schlafstörung
+        let lepInsomnia = insomniaInput ? 1 : 0;
+        let lepInsomniaOutput = insomniaInput ? "-1 LeP (Schlafstörung)<br>" : "";
 
+        //Schlafplatz-Modifikator
+        let lepPlace = placeInput;
+        let lepPlaceOutput;
+        switch (placeInput) {
+            case -1:
+                lepPlaceOutput = "-1 LeP (Schlechter Lagerplatz)<br>";
+                break;
+            case 0:
+                lepPlaceOutput = "+0 LeP (Schlafsaal)<br>";
+                break;
+            case 1:
+                lepPlaceOutput = "+1 LeP (Einzelzimmer)<br>";
+                break;
+            case 2:
+                lepPlaceOutput = "+2 LeP (Suite)<br>";
+                break;
+        }
+        //Ruhestörung
+        let lepDisturbed = disturbedInput ? -1 : 0;
+        let lepDisturbedOutput = disturbedInput ? "-1 LeP (Ruhestörung)<br>" : "";
+
+        //Schlafwandel
+        let lepWandel = wandelInput ? -1 : 0;
+        let lepWandelOutput = wandelInput ? "-1 LeP (Schlafwandel)<br>" : "";
+
+        //Wache
+        let lepGuarding = guardingInput ? -1 : 0;
+        let lepGuardingOutput = guardingInput ? "-1 LeP (Wache gehalten)<br>" : "";
+        //Berechnung LeP
+        let lepAdd = Math.max(rollLepValue + lepFInput + constBonus + lepRegMod + badLepRegMod + lepPlace + lepDisturbed + lepGuarding + lepWandel + lepInsomnia, 0);
+
+        if (sickInput === true) {
+            lepAdd = 0;
+        }
+
+        let newLep = lepValue + lepAdd;
+        let lepUpdate = newLep;
+
+        if (newLep > lepMax) {
+            lepUpdate = lepMax;
+            lepAdd = lepMax - lepValue;
+        }
+        const lepOutput = "LeP +<b>" + lepAdd + "</b>";
+        let lepDetailOutput = rollLepOutput + lepFOutput + constBonusOutput + lepRegModOutput + badLepRegModOutput + lepPlaceOutput + lepDisturbedOutput + lepGuardingOutput + lepWandelOutput + lepInsomniaOutput;
+        if (sickInput == true) {
+            lepDetailOutput = "Charakter ist erkrankt:<br> Keine LeP-Regeneration";
+        }
+        const constDetailOutput = constFOutput + constRegModOutput + constBadRegModOutput + tantrumOutput;
+        return [lepUpdate, lepOutput, constOutput, lepDetailOutput, constDetailOutput];
+    }
+
+    function createAspRegOutput(rollAspValue, rollIntuValue, html, tantrumInput, placeInput, disturbedInput, wandelInput, insomniaInput, guardingInput, sickInput) {
+        let aspFInput = html.find("#aspFillMod")[0]?.valueAsNumber;
+        let intuFInput = html.find("#intuFillMod")[0]?.valueAsNumber;
+        const sfRegInput = Number(html.find("#sfReg")[0]?.value || 0);
+        const astraRegInput = Number(html.find("#astraReg")[0]?.value || 0);
+        const astraBlockInput = html.find("#astraBlock")[0]?.checked || false;
+        let aspFOutput;
+
+        if (isNaN(aspFInput) || aspFInput === "") {
+            aspFInput = 0;
+            aspFOutput = "<span style='color:#800000;'>FEHLER: Manuelle AsP-Eingabe nicht übernommen.</span> <br>";
+        } else {
+            aspFOutput = toSignedString(aspFInput) + " AsP (manuelle Eingabe)<br>";
+        }
+        let intuFOutput;
+        if (isNaN(intuFInput) || intuFInput === "") {
+            intuFInput = 0;
+            intuFOutput = "<span style='color:#800000;'>FEHLER: Manuelle IN-Eingabe nicht übernommen.</span> <br>";
+        } else {
+            intuFOutput = toSignedString(intuFInput) + " IN (manuelle Eingabe)<br>";
+        }
+        //Regeneration SF
+        let sfRegAsp = sfRegInput;
+        let sfRegOutputH = " AsP (Regeneration (SF))<br>";
+        let rollAspOutputH = " AsP (1w6)<br>";
+
+        if (sfRegInput === 3) {
+            rollAspValue = Math.round(cleverValue / 3);
+            rollAspOutputH = " AsP (KL/3)<br>";
+        } else if (sfRegInput === 4) {
+            rollAspValue = Math.round(intuValue / 3);
+            rollAspOutputH = " AsP (IN/3)<br>";
+            sfRegAsp = 3;
+        }
+        const sfRegOutput = toSignedString(sfRegAsp) + sfRegOutputH;
+        const rollAspOutput = "+" + rollAspValue + rollAspOutputH;
+        //Astrale Regeneration
+        let aspRegMod = 0;
+        let intuRegMod = 0;
+        let aspRegModOutput = "";
+        let intuRegModOutput = "";
+        switch (astraRegInput) {
+            case 1:
+                aspRegMod = 1;
+                intuRegMod = -1;
+                aspRegModOutput = "+1 AsP (Astrale Reg. I) <br>";
+                intuRegModOutput = "-1 IN (Astrale Reg. I) <br>";
+                break;
+            case 2:
+                aspRegMod = 2;
+                intuRegMod = -2;
+                aspRegModOutput = "+2 AsP (Astrale Reg. II) <br>";
+                intuRegModOutput = "-2 IN (Astrale Reg. II) <br>";
+                break;
+            case 3:
+                aspRegMod = 3;
+                intuRegMod = -3;
+                aspRegModOutput = "+3 AsP (Astrale Reg. III) <br>";
+                intuRegModOutput = "-3 IN (Astrale Reg. III) <br>";
+                break;
+        }
+        //Astraler Block
+        let aspBlockMod = 0;
+        let intuAstraBlockMod = 0;
+        let astraBlockModOutput = "";
+        let intuAstraBlockModOutput = "";
+        if (astraBlockInput === true) {
+            aspBlockMod = -1;
+            intuAstraBlockMod = 2;
+            astraBlockModOutput = "-1 AsP (Astraler Block) <br>";
+            intuAstraBlockModOutput = "+2 IN (Astraler Block) <br>";
+        }
+
+        //Verwöhnt ff
+        const tantrumOutput = (tantrumInput > 0) ? "+" + tantrumInput + " (Verwöhnt) <br>" : "";
+
+        //Berechnung IN
+        let intuMod = intuFInput + intuRegMod + intuAstraBlockMod + tantrumInput;
+        const intuOutputAdd = "<i> " + toSignedString(intuMod) + "</i>";
+        const intuTotal = rollIntuValue + intuMod;
+        let intuBonus;
+        let intuBonusOutput;
+        let intuOutput;
+        if (intuTotal > intuValue) {
+            if (tantrumInput > 0) {
+                intuBonus = -1;
+                intuBonusOutput = "-1 AsP (IN misslungen (Verwöhnt))<br>";
+                intuOutput = "IN: <span style='color:#888;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
+            } else {
+                intuBonus = 0;
+                intuBonusOutput = "+0 AsP (IN misslungen)<br>";
+                intuOutput = "IN: <span style='color:#800000;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
+            }
+        } else {
+            if (sfRegInput >= 3) {
+                intuBonus = 2;
+                intuBonusOutput = "+2 AsP (IN gelungen)<br>";
+            } else {
+                intuBonus = 1;
+                intuBonusOutput = "+1 AsP (IN gelungen)<br>";
+            }
+            intuOutput = "IN: <span style='color:#008000;'><b>" + rollIntuValue + intuOutputAdd + "</b></span> (" + intuValue + ")";
+        }
+
+        //Schlafstörung und AuP
+        const aspInsomnia = insomniaInput ? -1 : 0;
+        const aspInsomniaOutput = insomniaInput ? "-1 AsP (Schlafstörung)<br>" : "";
+
+        //Schlafplatz-Modifikator
+        let aspPlace = placeInput;
+        let aspPlaceOutput;
+        switch (placeInput) {
+            case -1:
+                aspPlaceOutput = "-1 AsP (Schlechter Lagerplatz)<br>";
+                break;
+            case 0:
+                aspPlaceOutput = "+0 AsP (Schlafsaal)<br>";
+                break;
+            case 1:
+                aspPlaceOutput = "+1 AsP (Einzelzimmer)<br>";
+                break;
+            case 2:
+                aspPlaceOutput = "+2 AsP (Suite)<br>";
+                break;
+        }
+        //Ruhestörung
+        const aspDisturbed = disturbedInput ? -1 : 0;
+        const aspDisturbedOutput = disturbedInput ? "-1 AsP (Ruhestörung)<br>" : "";
+
+        //Schlafwandel
+        const aspWandel = wandelInput ? -1 : 0;
+        const aspWandelOutput = wandelInput ? "-1 AsP (Schlafwandel)<br>" : "";
+
+        //Wache
+        const aspGuarding = guardingInput ? -1 : 0;
+        const aspGuardingOutput = guardingInput ? "-1 AsP (Wache gehalten)<br>" : "";
+
+        //Berechnung AsP
+        let aspAdd = Math.max(rollAspValue + aspFInput + intuBonus + sfRegAsp + aspRegMod + aspBlockMod + aspPlace + aspDisturbed + aspGuarding + aspWandel + aspInsomnia, 0);
+
+        if (sickInput === true && aspAdd > 1) {
+            aspAdd = 1;
+        }
+        let newAsp = aspValue + aspAdd;
+        let aspUpdate = newAsp;
+
+        if (newAsp > aspMax) {
+            aspUpdate = aspMax;
+            aspAdd = aspMax - aspValue;
+        }
+        const aspOutput = "AsP +<b>" + aspAdd + "</b>";
+        let aspDetailOutput = rollAspOutput + aspFOutput + intuBonusOutput + sfRegOutput + aspRegModOutput + astraBlockModOutput + aspPlaceOutput + aspDisturbedOutput + aspGuardingOutput + aspWandelOutput + aspInsomniaOutput;
+        const intuDetailOutput = intuFOutput + intuRegModOutput + intuAstraBlockModOutput + tantrumOutput;
+
+        if (sickInput == true) {
+            aspDetailOutput = "Charakter ist erkrankt:<br> AsP-Regeneration auf 1 beschränkt";
+        }
+        return [aspUpdate, aspOutput, intuOutput, aspDetailOutput, intuDetailOutput];
+    }
+
+    function createKapRegOutput(html) {
+        //Berechnung KaP
+        const kapFInput = html.find("#kapFillMod")[0]?.valueAsNumber;
+        const rollKapValue = 1;
+        const rollKapOutput = "+" + rollKapValue + " KaP (Basis)<br>";
+        let kapFOutput;
+        let kapAdd = rollKapValue;
+        if (isNaN(kapFInput) || kapFInput === "") {
+            kapFOutput = "<span style='color:#800000;'>FEHLER: Manuelle KaP-Eingabe nicht übernommen.</span> <br>";
+        } else {
+            kapFOutput = toSignedString(kapFInput) + " KaP (manuelle Eingabe)<br>";
+            kapAdd += kapFInput;
+        }
+        if (kapAdd < 0) {
+            kapAdd = 0;
+        }
+        let newKap = kapValue + kapAdd;
+        let kapUpdate = newKap;
+        if (newKap > kapMax) {
+            kapUpdate = kapMax;
+            kapAdd = kapMax - kapValue;
+        }
+        const kapOutput = "KaP +<b>" + kapAdd + "</b>";
+        const kapDetailOutput = rollKapOutput + kapFOutput;
+        return [kapUpdate, kapOutput, kapDetailOutput];
+    }
+
+    function createAupRegOutput(insomniaInput, aupvalue) {
+        //Schlafstörung und AuP
+        let aupAdd;
+        let aupUpdate;
+        let aupDetailOutput;
+        if (insomniaInput == true) {
+            const aupHadd = Math.round(aupMax * 0.75);
+            if (aupHadd < aupvalue) {
+                aupAdd = 0;
+                aupDetailOutput = "AuP bereits über 3/4";
+                aupUpdate = aupvalue;
+            } else {
+                aupAdd = aupHadd - aupvalue;
+                aupDetailOutput = "AuP über Nacht auf 3/4 regeneriert";
+                aupUpdate = aupHadd;
+            }
+        } else {
+            aupAdd = aupMax - aupvalue;
+            aupUpdate = aupMax;
+            aupDetailOutput = "AuP über Nacht voll regeneriert";
+        }
+        const aupOutput = "AuP +<b>" + aupAdd + "</b>";
+        return [aupUpdate, aupOutput, aupDetailOutput];
+    }
+
+    async function htmlCallback(html) {
+        const tantrumInput = Number(html.find("#tantrum")[0]?.value || 0);
+        const placeInput = Number(html.find("#platz")[0].value);
+        const disturbedInput = html.find("#unruhe")[0].checked;
+        const guardingInput = html.find("#wache")[0].checked;
+        const wandelInput = html.find("#wandel")[0]?.checked || false;
+        const insomniaInput = html.find("#insomnia")[0]?.checked || false;
+        const sickInput = html.find("#krank")[0].checked;
+
+        //Würfelwurf
+        let bigRoll = new Roll(buildRollExp(showLep, showAsp)).roll({async: true});
+        bigRoll.then(roll => {
+            const [rollLepValue, rollConstValue, rollAspValue, rollIntuValue] = getRollValues(roll, showLep, showAsp);
+            const [lepUpdate, lepOutput, constOutput, lepDetailOutput, constDetailOutput] = createLepRegOutput(rollLepValue, rollConstValue, html, tantrumInput, placeInput, disturbedInput, wandelInput, insomniaInput, guardingInput, sickInput);
+            const [aspUpdate, aspOutput, intuOutput, aspDetailOutput, intuDetailOutput] = createAspRegOutput(rollAspValue, rollIntuValue, html, tantrumInput, placeInput, disturbedInput, wandelInput, insomniaInput, guardingInput, sickInput);
+            const [kapUpdate, kapOutput, kapDetailOutput] = createKapRegOutput(html);
+            const [aupUpdate, aupOutput, aupDetailOutput] = createAupRegOutput(insomniaInput, aupValue);
+            //Token-Werte aktualisieren
+            token.actor.update({
+                'data.base.resources.vitality.value': lepUpdate,
+                'data.base.resources.astralEnergy.value': aspUpdate,
+                'data.base.resources.karmicEnergy.value': kapUpdate,
+                'data.base.resources.endurance.value': aupUpdate
+            });
+            //Chatausgabe
+            let message = "<table><tr><th colspan=2>Nächtliche Regeneration</th><tr>";
+            if (showLep) {
+                const physMessage = "<tr><td><details><summary>" + lepOutput + "</summary>" + lepDetailOutput + "</details></td><td><details ><summary>" + constOutput + "</summary>" + constDetailOutput + "</details></td></tr>";
+                message += physMessage;
+            }
+            if (showAsp) {
+                const astraMessage = "<tr><td><details ><summary>" + aspOutput + "</summary>" + aspDetailOutput + "</details></td><td><details ><summary>" + intuOutput + "</summary>" + intuDetailOutput + "</details></td></tr>";
+                message += astraMessage;
+            }
+            if (showKap) {
+                const karmicMessage = "<tr><td><details ><summary>" + kapOutput + "</summary>" + kapDetailOutput + "</details></td><td></td></tr>";
+                message += karmicMessage;
+            }
+            const enduMessage = "<tr><td><details ><summary>" + aupOutput + "</summary>" + aupDetailOutput + "</details></td><td></td></tr></table>";
+            message += enduMessage;
+
+            roll.toMessage({
+                flavor: message, speaker: ChatMessage.getSpeaker({token: token.document})
+            });
+        });
+    }
+
+    function toSignedString(n) {
+        return (n > 0 ? '+' : '') + n.toString();
+    }
+
+    function buildRollExp(showLep, showAsp) {
+        let roll = [];
+        if (showLep) {
+            roll.push('1d6');
+            roll.push('1d20');
+        }
+        if (showAsp) {
+            roll.push('1d6');
+            roll.push('1d20');
+        }
+        return '{' + roll.join(',') + '}';
+    }
+
+    function getRollValues(roll, showLep, showAsp) {
+        let rollLepValue = 0;
+        let rollConstValue = 0;
+        let rollAspValue = 0;
+        let rollIntuValue = 0;
+        if (showLep) {
+            rollLepValue = roll.dice[0].values[0];
+            rollConstValue = roll.dice[1].values[0];
+        }
+        if (showLep && showAsp) {
+            rollAspValue = roll.dice[2].values[0];
+            rollIntuValue = roll.dice[3].values[0];
+        } else if (showAsp && !showLep) {
+            rollAspValue = roll.dice[0].values[0];
+            rollIntuValue = roll.dice[1].values[0];
+        }
+        return [rollLepValue, rollConstValue, rollAspValue, rollIntuValue];
+    }
+}
