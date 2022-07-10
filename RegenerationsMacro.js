@@ -1,4 +1,4 @@
-//Nächtliche Regeneration v0.8.3
+//Nächtliche Regeneration v0.9.0
 /**
  Makro zur Vereinfachung der nächtlichen Regeneration
  Berücksichtigt Vorteile (Schnelle Heilung, Astrale Regeneration), Nachteile (Verwöhnt, Schlechte Heilung, Astraler Block, Schlafwandler, Schlafstörung), Sonderfertigkeit (Regeneration) sowie äußere Einflusse (Schlafplatz, Wachehalten, Ruhestörung, Erkrankung) - werden automatisch ausgewählt, wenn im Token oder Actor angelegt sind.
