@@ -108,23 +108,30 @@ async function groupRoll(token, index){
         
         if(w1 > att1){
             w1pen = w1 - att1;
-            
+            w1max = 0;
         }else{
             w1pen = 0;
+            w1max = att1 - w1;
         };
         if(w2 > att2){
             w2pen = w2 - att2;
+            w2max = 0;
         }else{
             w2pen = 0;
+            w2max = att2 - w2;
         };
         if(w3 > att3){
             w3pen = w3 - att3;
+            w3max = 0;
         }else{
             w3pen = 0;
+            w3max = att3 - w3;
         };
         let talentResult = talentValue - w1pen - w2pen - w3pen;
+        let maxDifficulty = Math.min(w1max, w2max, w3max) + talentResult
         
-        message = talentName + "<br>" + att1Name + ": " + att1 + " | " + att2Name + ": " + att2 + " | " + att3Name + ": " + att3 + "<br>" + "TaW: " + talentValue + " | TaP*: " + talentResult + "<br>" + luck;
+        
+        message = talentName + "-TaW: " + talentValue + "<br>" + att1Name + ": " + att1 + " | " + att2Name + ": " + att2 + " | " + att3Name + ": " + att3 + "<br>"  + "TaP*: " + talentResult + " | Max. Erschwernis: " + maxDifficulty + "<br>" +luck;
         roll.toMessage({
             flavor: message, 
             speaker: ChatMessage.getSpeaker({token: token.document}), 
