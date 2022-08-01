@@ -9,3 +9,10 @@ Berücksichtigt:
 
 Vor- und Nachteile, sowie Sonderfertigkeiten werden automatisch ausgefüllt und ausgewürfelt. 
 LeP, AsP, KaP und AuP werden im Token aktualisiert.
+
+# Gruppen-Talentwurf
+
+Makro zum Würfeln von Gruppenwürfen auf 
+- Menschenkenntnis
+- Selbstbeherrschung
+- Sinnenschärfe
