@@ -1,4 +1,4 @@
-//Würfelt für ausgewählte Token als Gruppe
+//Würfelt für ausgewählte Token als Gruppe v0.1.1
 
 
 if(canvas.tokens.controlled.length == 0){
@@ -134,8 +134,8 @@ async function groupRoll(token, index){
         message = talentName + "-TaW: " + talentValue + "<br>" + att1Name + ": " + att1 + " | " + att2Name + ": " + att2 + " | " + att3Name + ": " + att3 + "<br>"  + "TaP*: " + talentResult + " | Max. Erschwernis: " + maxDifficulty + "<br>" +luck;
         roll.toMessage({
             flavor: message, 
-            speaker: ChatMessage.getSpeaker({token: token.document}), 
-            rollMode: CONST.DICE_ROLL_MODES.BLIND
+            speaker: ChatMessage.getSpeaker({token: token.document})},
+            {rollMode: 'blindroll'});
         });
     });
 }
