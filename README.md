@@ -16,3 +16,4 @@ Makro zum Würfeln von Gruppenwürfen auf
 - Menschenkenntnis
 - Selbstbeherrschung
 - Sinnenschärfe
+- Eigenschaften (inkl. MR)
