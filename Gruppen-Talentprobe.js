@@ -1,4 +1,4 @@
-//Würfelt für ausgewählte Token als Gruppe v0.2
+//Würfelt für ausgewählte Token als Gruppe v0.2.1
 
 
 
@@ -182,7 +182,7 @@ async function main() {
                 
                 header = "<tr style='font-size:80%'><th style='text-align:left'>" + talentName + "</th><th style='border-left:1px solid black'>" + att1Name + "</th><th style='border-left:1px solid black'>" + att2Name + "</th><th style='border-left:1px solid black'>" + att3Name + "</th><th style='border-left:1px solid black'>W/P*</th><th style='border-left:1px solid black'>B/M</th><th style='border-left:1px solid black'>G</th></tr>" 
                 
-                output += "<tr><td style='text-align:left' rowspan=2>" + tokenName + "</td><td style='border-left:1px solid black'><i>" + att1 + "</td><td style='border-left:1px solid black'><i>" + att2 + "</td><td style='border-left:1px solid black'><i>" + att3 + "</td><td style='border-left:1px solid black'><i>" + talentValue + "</td><td style='border-left:1px solid black' rowspan=2>" + maxDifficulty  + "</td><td style='border-left:1px solid black' rowspan=2>" + luck + "</td></tr>" + "<tr><td style='border-left:1px solid black'>" + w1 + "</td><td style='border-left:1px solid black'>" + w2 + "</td><td style='border-left:1px solid black'>" + w3 + "</td><td style='border-left:1px solid black'>" + talentResult  + "</td></tr>"
+                output += "<tr><td style='text-align:left; width:40%' rowspan=2>" + tokenName + "</td><td style='border-left:1px solid black'><i>" + att1 + "</td><td style='border-left:1px solid black'><i>" + att2 + "</td><td style='border-left:1px solid black'><i>" + att3 + "</td><td style='border-left:1px solid black'><i>" + talentValue + "</td><td style='border-left:1px solid black' rowspan=2>" + maxDifficulty  + "</td><td style='border-left:1px solid black' rowspan=2>" + luck + "</td></tr>" + "<tr><td style='border-left:1px solid black'>" + w1 + "</td><td style='border-left:1px solid black'>" + w2 + "</td><td style='border-left:1px solid black'>" + w3 + "</td><td style='border-left:1px solid black'>" + talentResult  + "</td></tr>"
                 
                 
             }else{
