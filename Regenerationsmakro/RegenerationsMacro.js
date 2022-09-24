@@ -1,4 +1,4 @@
-//Nächtliche Regeneration v0.9.0
+//Nächtliche Regeneration v0.9.3
 /**
  Makro zur Vereinfachung der nächtlichen Regeneration
  Berücksichtigt Vorteile (Schnelle Heilung, Astrale Regeneration), Nachteile (Verwöhnt, Schlechte Heilung, Astraler Block, Schlafwandler, Schlafstörung), Sonderfertigkeit (Regeneration) sowie äußere Einflusse (Schlafplatz, Wachehalten, Ruhestörung, Erkrankung) - werden automatisch ausgewählt, wenn im Token oder Actor angelegt sind.
@@ -14,29 +14,29 @@ async function main() {
     }
 
     //Charakter Werte
-    let tokenName = token.actor.data.name;
+    let tokenName = token.actor.name;
 
-    const lepValue = token.actor.data.data.base.resources.vitality.value;
-    const lepMax = token.actor.data.data.base.resources.vitality.max;
-    const aspValue = token.actor.data.data.base.resources.astralEnergy.value;
-    const aspMax = token.actor.data.data.base.resources.astralEnergy.max;
-    const kapValue = token.actor.data.data.base.resources.karmicEnergy.value;
-    const kapMax = token.actor.data.data.base.resources.karmicEnergy.max;
-    const aupValue = token.actor.data.data.base.resources.endurance.value;
-    const aupMax = token.actor.data.data.base.resources.endurance.max;
+    const lepValue = token.actor.system.base.resources.vitality.value;
+    const lepMax = token.actor.system.base.resources.vitality.max;
+    const aspValue = token.actor.system.base.resources.astralEnergy.value;
+    const aspMax = token.actor.system.base.resources.astralEnergy.max;
+    const kapValue = token.actor.system.base.resources.karmicEnergy.value;
+    const kapMax = token.actor.system.base.resources.karmicEnergy.max;
+    const aupValue = token.actor.system.base.resources.endurance.value;
+    const aupMax = token.actor.system.base.resources.endurance.max;
 
-    const constValue = token.actor.data.data.base.basicAttributes.constitution.value;
-    const intuValue = token.actor.data.data.base.basicAttributes.intuition.value;
-    const cleverValue = token.actor.data.data.base.basicAttributes.cleverness.value;
+    const constValue = token.actor.system.base.basicAttributes.constitution.value;
+    const intuValue = token.actor.system.base.basicAttributes.intuition.value;
+    const cleverValue = token.actor.system.base.basicAttributes.cleverness.value;
 
     const showLep = lepValue < lepMax;
     const showAsp = aspMax > 0 && aspValue < aspMax;
     const showKap = kapMax > 0 && kapValue < kapMax;
 
     ////Vor-/Nachtteile/SF
-    const verwohnt = token.actor.items.find(item => item.data.name === "Verwöhnt");
-    const schlafwandler = token.actor.items.find(item => item.data.name === "Schlafwandler");
-    const schlafstorung = token.actor.items.find(item => item.data.name === "Schlafstörungen");
+    const verwohnt = token.actor.items.find(item => item.name === "Verwöhnt");
+    const schlafwandler = token.actor.items.find(item => item.name === "Schlafwandler");
+    const schlafstorung = token.actor.items.find(item => item.name === "Schlafstörungen");
 
 
     //Dialog-input
@@ -142,6 +142,8 @@ async function main() {
                 wandelCheck = divInputChecked;
                 wandelOutput = "<span style='color:#800;'> w20: " + rollWandelValue + "</span>";
                 ui.notifications.warn("Schlafwandel wurde ausgelöst!");
+               var table = game.tables.find(table => table.name === "Schlafwandel");
+table.draw();
             } else {
                 wandelCheck = divInputUnchecked;
                 wandelOutput = "<span style='color:#888;'> w20: " + rollWandelValue + "</span>";
@@ -157,7 +159,7 @@ async function main() {
         if (schlafstorung) {
             let schlafstorungRoll = new Roll('1d20').roll({async: false});
             const rollStorungValue = schlafstorungRoll.terms[0].results[0].result;
-            const schlafstorungValue = schlafstorung.data.data.value;
+            const schlafstorungValue = schlafstorung.system.value;
             schlafstorungRoll.toMessage({
                 flavor: "Schlafstörung " + schlafstorungValue,
                 speaker: ChatMessage.getSpeaker({token: token.document})
@@ -183,7 +185,7 @@ async function main() {
     }
 
     function createVerwohntDialog(verwohnt) {
-        const verwohntValue = Number(verwohnt?.data.data.value || 0);
+        const verwohntValue = Number(verwohnt?.data.value || 0);
         return divFlexStart + `
 				<form action"#">
 					<label for="tantrum">Verwöhnt</label>
@@ -207,13 +209,13 @@ async function main() {
     }
 
     function createHeilDialog(token) {
-        let schnHeil = token.actor.items.find(item => item.data.name === "Schnelle Heilung");
-        let schlHeil = token.actor.items.find(item => item.data.name === "Schlechte Regeneration");
+        let schnHeil = token.actor.items.find(item => item.name === "Schnelle Heilung");
+        let schlHeil = token.actor.items.find(item => item.name === "Schlechte Regeneration");
         // Schlechte Regeneration
         let schlHeilCheck = schlHeil ? divInputChecked : divInputUnchecked;
         const schlHeilDialog = divFlexStart + "Schlechte Heilung <input id='badReg'" + divInputBox + schlHeilCheck + divFlexEnd;
         // Schnelle Heilung
-        const schnHeilValue = Number(schnHeil?.data.data.value || 0);
+        const schnHeilValue = Number(schnHeil?.data.value || 0);
 
 
         const schnHeilDialog = divFlexStart + ` 
@@ -231,17 +233,17 @@ async function main() {
     }
 
     function createAspRegDialog(token) {
-        let astraReg = token.actor.items.find(item => item.data.name === "Astrale Regeneration");
-        let astraBlock = token.actor.items.find(item => item.data.name === "Astraler Block");
-        let sfReg1 = token.actor.items.find(item => item.data.name === "Regeneration I");
-        let sfReg2 = token.actor.items.find(item => item.data.name === "Regeneration II");
-        let sfReg3 = token.actor.items.find(item => item.data.name === "Meisterliche Regeneration");
+        let astraReg = token.actor.items.find(item => item.name === "Astrale Regeneration");
+        let astraBlock = token.actor.items.find(item => item.name === "Astraler Block");
+        let sfReg1 = token.actor.items.find(item => item.name === "Regeneration I");
+        let sfReg2 = token.actor.items.find(item => item.name === "Regeneration II");
+        let sfReg3 = token.actor.items.find(item => item.name === "Meisterliche Regeneration");
         // Astraler Block
         let astraBlockCheck = astraBlock ? divInputChecked : divInputUnchecked;
         const astraBlockDialog = divFlexStart + "Astraler Block <input id='astraBlock'" + divInputBox + astraBlockCheck + divFlexEnd;
 
         // Astrale Regeneration
-        let astraRegValue = astraReg?.data.data.value || 0;
+        let astraRegValue = astraReg?.data.value || 0;
         let astraRegSel0 = "";
         let astraRegSel1 = "";
         let astraRegSel2 = "";
@@ -676,10 +678,10 @@ async function main() {
             const [aupUpdate, aupOutput, aupDetailOutput] = createAupRegOutput(insomniaInput, aupValue);
             //Token-Werte aktualisieren
             token.actor.update({
-                'data.base.resources.vitality.value': lepUpdate,
-                'data.base.resources.astralEnergy.value': aspUpdate,
-                'data.base.resources.karmicEnergy.value': kapUpdate,
-                'data.base.resources.endurance.value': aupUpdate
+                'system.base.resources.vitality.value': lepUpdate,
+                'system.base.resources.astralEnergy.value': aspUpdate,
+                'system.base.resources.karmicEnergy.value': kapUpdate,
+                'system.base.resources.endurance.value': aupUpdate
             });
             //Chatausgabe
             let message = "<table><tr><th colspan=2>Nächtliche Regeneration</th><tr>";

@@ -49,7 +49,7 @@ async function main() {
     tokens.forEach(groupOverview);
     function groupOverview(token, index){
         
-        tokenName = token.data.name
+        tokenName = token.name
         tokenShortName = tokenName.split(" ")[0];
         tokenList.push(tokenShortName);
         
@@ -58,18 +58,18 @@ async function main() {
         talentList.forEach(checkTalent);
         function checkTalent(talentName){
             letterCount = talentName.length;
-            talent = token.actor.items.find(item => item.data.name.substring(0,letterCount) === talentName);
+            talent = token.actor.items.find(item => item.name.substring(0,letterCount) === talentName);
 
             
             //Datenbereinigung
             if(talent == undefined){
                 talentValue = undefined;
             }else{
-                talentValue = talent.data.data.value;
+                talentValue = talent.system.value;
                 if(talentValue == null){
                     talentValue = 0;
                 };
-                talentType = talent.data.type;
+                talentType = talent.system.type;
                 if(talentValue == 0 && (talentType == "advantage" || talentType == "disadvantage")){
                     talentValue = "✓";
                 };
@@ -87,13 +87,13 @@ async function main() {
         
         langue.forEach(checkLangue);
         function checkLangue(talentName){
-            talent = token.actor.items.find(item => item.data.name === talentName && item.data.type === "language"); 
+            talent = token.actor.items.find(item => item.name === talentName && item.system.type === "language"); 
             
             //Datenbereinigung
             if(talent == undefined){
                 talentValue = undefined;
             }else{
-                talentValue = talent.data.data.value;
+                talentValue = talent.system.value;
                 if(talentValue == null){
                     talentValue = 0;
                 };
@@ -111,13 +111,13 @@ async function main() {
     
         script.forEach(checkScript);
         function checkScript(talentName){
-            talent = token.actor.items.find(item => item.data.name === talentName && item.data.type === "scripture"); 
+            talent = token.actor.items.find(item => item.name === talentName && item.system.type === "scripture"); 
             
             //Datenbereinigung
             if(talent == undefined){
                 talentValue = undefined;
             }else{
-                talentValue = talent.data.data.value;
+                talentValue = talent.system.value;
                 if(talentValue == null){
                     talentValue = 0;
                 };

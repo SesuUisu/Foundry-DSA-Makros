@@ -1,16 +1,18 @@
+//v0.2 Tokeneffekt für Zauberopfer
+
 main();
 
 async function main() {
     //Überprüfe, ob ein Token ausgewählt wurde
-     if (canvas.tokens.controlled.length === 0 || canvas.tokens.controlled.length > 1) {
-        ui.notifications.error("Bitte einen Token auswählen.");
+     if (canvas.tokens.controlled.length === 0) {
+        //ui.notifications.error("Bitte einen Token auswählen.");
         return;
     };
     
     //Charakter Werte
     const tokens = canvas.tokens.controlled;
-    const tokenName = token.actor.data.name;
-    const blindkampf = token.actor.items.find(item => item.data.name === "Blindkampf");
+    const tokenName = token.actor.name;
+    const blindkampf = token.actor.items.find(item => item.name === "Blindkampf");
     
     //Dialog-input
     const divFlexStart = "<div style='display:flex'><span style='flex:1'>";
@@ -63,43 +65,45 @@ async function main() {
         
         effectData = [
             {
-                key: "data.base.combatAttributes.active.baseInitiative.value",
+                key: "system.base.combatAttributes.active.baseInitiative.value",
                 value: 0 - Math.round(zfw  * blindMod),
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
-                key: "data.base.combatAttributes.active.baseRangedAttack.value",
+                key: "system.base.combatAttributes.active.baseRangedAttack.value",
                 value: 0 - Math.round(zfp  * blindMod),
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
-                key: "data.base.combatAttributes.active.baseAttack.value",
+                key: "system.base.combatAttributes.active.baseAttack.value",
                 value: 0 - Math.round(atMod  * blindMod),
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
-                key: "data.base.combatAttributes.active.baseParry.value",
+                key: "system.base.combatAttributes.active.baseParry.value",
                 value: 0 - Math.round(paMod  * blindMod),
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
    /*         {
-                key: "data.base.combatAttributes.active.dodge.value",
+                key: "base.combatAttributes.active.dodge.value",
                 value: 0 - Math.round(paMod  * blindMod),
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             }
    */         
         ];
-        effecDuration = Math.round(zfw / 2) * 3;
+        effecDuration = Math.round(zfw / 4);
         effect = {
             label: "Blitz dich find",
             icon: "icons/svg/lightning.svg",
+            tint: "#d9bf3a",
             changes: effectData,
             duration: {
-                "seconds": effecDuration,
+                "rounds": effecDuration,
+                "turns": 1,
                 },
             flags: {
                 core: {
-                    statusId: "Blitz dich find"
+                    statusId: "Blitzdichfind"
                 }
             },
         };
@@ -107,5 +111,3 @@ async function main() {
     };  
        
 };
-
-

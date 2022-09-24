@@ -1,0 +1,77 @@
+{
+  "name": "Nachtklo",
+  "img": "icons/svg/d20-grey.svg",
+  "results": [
+    {
+      "_id": "aEWSZHpVZddyVrpn",
+      "type": 0,
+      "text": "Nutzt eine Bettpfanne",
+      "weight": 9,
+      "range": [
+        1,
+        9
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 1,
+      "rangeH": 9
+    },
+    {
+      "_id": "6yg1NmbbX8t68LXX",
+      "type": 0,
+      "text": "Geht auf ein Abort",
+      "weight": 8,
+      "range": [
+        10,
+        17
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 10,
+      "rangeH": 17
+    },
+    {
+      "_id": "kQ5CsRjvJAn2kHdK",
+      "type": 0,
+      "text": "Uriniert auf einen Stuhl",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 18,
+      "rangeH": 18
+    },
+    {
+      "_id": "qWxBUptXljQjsTMV",
+      "type": 0,
+      "text": "Uriniert ins Bett",
+      "weight": 2,
+      "range": [
+        19,
+        20
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 19,
+      "rangeH": 20
+    }
+  ],
+  "formula": "1d20",
+  "replacement": true,
+  "displayRoll": false,
+  "flags": {
+    "exportSource": {
+      "world": "gewerkschaftsversammlung",
+      "system": "dsa-4.1",
+      "coreVersion": "9.280",
+      "systemVersion": "0.2.5"
+    }
+  }
+}

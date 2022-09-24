@@ -1,0 +1,77 @@
+{
+  "name": "Schuhinhalt",
+  "img": "icons/svg/d20-grey.svg",
+  "results": [
+    {
+      "_id": "5gJp4d94Fa1gNupd",
+      "type": 0,
+      "text": "Füllt jemandes Stiefel mit Wasser",
+      "weight": 5,
+      "range": [
+        1,
+        5
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 1,
+      "rangeH": 5
+    },
+    {
+      "_id": "MpXOfUFiwDH4pWRF",
+      "type": 0,
+      "text": "Füllt jemandes Stiefel mit Wein/Bier",
+      "weight": 3,
+      "range": [
+        6,
+        8
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 6,
+      "rangeH": 8
+    },
+    {
+      "_id": "VRV0XUkGe5MPFsaG",
+      "type": 0,
+      "text": "Füllt jemandes Stiefel mit dem Inhalt eines Betttopfs",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 9,
+      "rangeH": 9
+    },
+    {
+      "_id": "ERHFvQaE0n0zsG7Q",
+      "type": 0,
+      "text": "Füllt jemandes Stiefel mit Erde",
+      "weight": 2,
+      "range": [
+        10,
+        11
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 10,
+      "rangeH": 11
+    }
+  ],
+  "formula": "1d11",
+  "replacement": true,
+  "displayRoll": false,
+  "flags": {
+    "exportSource": {
+      "world": "gewerkschaftsversammlung",
+      "system": "dsa-4.1",
+      "coreVersion": "9.280",
+      "systemVersion": "0.2.5"
+    }
+  }
+}

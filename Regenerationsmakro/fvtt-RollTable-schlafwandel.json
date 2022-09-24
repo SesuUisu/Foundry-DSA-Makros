@@ -1,0 +1,397 @@
+{
+  "name": "Schlafwandel",
+  "img": "modules/game-icons-net/blacktransparent/sleepy.svg",
+  "description": "(Mögliche) Situation, die während des Schlafwandelns geschieht:",
+  "results": [
+    {
+      "_id": "9MUsyDYqAHsfksI3",
+      "type": 0,
+      "text": "Stiehlt aus einem Geschäft/Nachbarraum/Rucksack",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 1,
+      "rangeH": 1
+    },
+    {
+      "_id": "z7uEZ4VRPl6hc4JC",
+      "type": 0,
+      "text": "Legt sich ins Bett zu einer anderen Person",
+      "weight": 3,
+      "range": [
+        2,
+        4
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 2,
+      "rangeH": 4
+    },
+    {
+      "_id": "7keOJvDrwGxm3xR8",
+      "type": 0,
+      "text": "Wacht in hüfthohem Wasser stehend auf",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 5,
+      "rangeH": 5
+    },
+    {
+      "_id": "JbcxKMOo9Y5uwmjg",
+      "type": 0,
+      "text": "Läuft [[1d10]] Minuten durch die Gegend und schläft dann auf dem Boden weiter",
+      "weight": 15,
+      "range": [
+        6,
+        20
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 6,
+      "rangeH": 20
+    },
+    {
+      "_id": "l6ouviZW17DPA9uX",
+      "type": 0,
+      "text": "Wacht in/an einem Baum auf",
+      "weight": 2,
+      "range": [
+        21,
+        22
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 21,
+      "rangeH": 22
+    },
+    {
+      "_id": "xJPsYPaplvdnggh1",
+      "type": 0,
+      "text": "Geht in den Stall und schläft dort weiter",
+      "weight": 4,
+      "range": [
+        23,
+        26
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 23,
+      "rangeH": 26
+    },
+    {
+      "_id": "UATKxlYxMtO3VTd2",
+      "type": 0,
+      "text": "Wacht am nächsten Morgen mit Schrammen auf",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 27,
+      "rangeH": 27
+    },
+    {
+      "_id": "LMjPMX8Ezb8kD5fZ",
+      "type": 0,
+      "text": "Wacht in der Kleidung einer anderen Person auf",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 28,
+      "rangeH": 28
+    },
+    {
+      "_id": "FNbVI9F5z1VLUt0g",
+      "type": 0,
+      "text": "Schlafessen ([[1d4-1]] Rationen sind verspeist)",
+      "weight": 10,
+      "range": [
+        29,
+        38
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 29,
+      "rangeH": 38
+    },
+    {
+      "_id": "Ry6AapAbyARf5cxu",
+      "type": 1,
+      "text": "Schuhinhalt",
+      "collection": "RollTable",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-grey.svg",
+      "resultId": "CQ9B0OPxcKjeRsm9",
+      "rangeL": 39,
+      "rangeH": 39
+    },
+    {
+      "_id": "cvcdSGMvYnzynKcn",
+      "type": 0,
+      "text": "Versteckt Gegenstände",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 40,
+      "rangeH": 40
+    },
+    {
+      "_id": "UeaSNKo7ekQcZWZw",
+      "type": 0,
+      "text": "Bücher/Schriftstücke sind mit Kreide verziert",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 41,
+      "rangeH": 41
+    },
+    {
+      "_id": "NFx49STVXqlCrwHf",
+      "type": 0,
+      "text": "Tanzt und legt sich wieder ins Bett",
+      "weight": 3,
+      "range": [
+        42,
+        44
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 42,
+      "rangeH": 44
+    },
+    {
+      "_id": "9mNapeK6xHspdgMM",
+      "type": 0,
+      "text": "Wacht nackt auf dem Dorfplatz auf",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 45,
+      "rangeH": 45
+    },
+    {
+      "_id": "PYwXiWCkdWk80Bwe",
+      "type": 0,
+      "text": "Wacht in einem fremden Haus auf",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 46,
+      "rangeH": 46
+    },
+    {
+      "_id": "DxbfZ9vi84UITmYs",
+      "type": 0,
+      "text": "Wacht in einer Zelle der Stadtwache auf",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 47,
+      "rangeH": 47
+    },
+    {
+      "_id": "GjrtVWPI8bE5rzhu",
+      "type": 0,
+      "text": "Schlägt im Schlaf/im Wandel um sich",
+      "weight": 5,
+      "range": [
+        48,
+        52
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 48,
+      "rangeH": 52
+    },
+    {
+      "_id": "tvYAphmHeaFSeX8Y",
+      "type": 0,
+      "text": "Spricht (mit einer Person) im Schlaf",
+      "weight": 15,
+      "range": [
+        53,
+        67
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 53,
+      "rangeH": 67
+    },
+    {
+      "_id": "uIs0Vij4TyjGTtAw",
+      "type": 0,
+      "text": "Bereitet die Abreise vor",
+      "weight": 2,
+      "range": [
+        68,
+        69
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 68,
+      "rangeH": 69
+    },
+    {
+      "_id": "fXBmQqoMWcqUmbGE",
+      "type": 0,
+      "text": "Singt im Schlaf",
+      "weight": 3,
+      "range": [
+        70,
+        72
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 70,
+      "rangeH": 72
+    },
+    {
+      "_id": "aaNO5U7nknyYZ7rf",
+      "type": 0,
+      "text": "Räumt einen (fremden) Rucksack aus",
+      "weight": 2,
+      "range": [
+        73,
+        74
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 73,
+      "rangeH": 74
+    },
+    {
+      "_id": "fN8i7sZc4U7La1Cw",
+      "type": 0,
+      "text": "Schläft mit dem Daumen im Mund durch",
+      "weight": 12,
+      "range": [
+        75,
+        86
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 75,
+      "rangeH": 86
+    },
+    {
+      "_id": "44k6kkAuPKupIgSA",
+      "type": 0,
+      "text": "Eine Schlechte Eigenschaft triggert",
+      "weight": 1,
+      "range": [
+        87,
+        87
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 87,
+      "rangeH": 87
+    },
+    {
+      "_id": "xiEqeeyO7GQkFuH8",
+      "type": 0,
+      "text": "Putzt den Raum/das Haus",
+      "weight": 1,
+      "range": [
+        88,
+        88
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "rangeL": 88,
+      "rangeH": 88
+    },
+    {
+      "_id": "ROFLDFQwu0ta9Tyx",
+      "type": 1,
+      "text": "Nachtklo",
+      "collection": "RollTable",
+      "weight": 12,
+      "range": [
+        89,
+        100
+      ],
+      "drawn": false,
+      "flags": {},
+      "img": "icons/svg/d20-grey.svg",
+      "resultId": "VrapzpHwCnkJnxh0",
+      "rangeL": 89,
+      "rangeH": 100
+    }
+  ],
+  "formula": "1d100",
+  "replacement": true,
+  "displayRoll": false,
+  "flags": {
+    "exportSource": {
+      "world": "gewerkschaftsversammlung",
+      "system": "dsa-4.1",
+      "coreVersion": "9.280",
+      "systemVersion": "0.2.5"
+    }
+  }
+}

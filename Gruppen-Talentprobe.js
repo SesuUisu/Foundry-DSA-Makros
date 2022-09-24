@@ -1,4 +1,4 @@
-//Würfelt für ausgewählte Token als Gruppe v0.2.1
+//Würfelt für ausgewählte Token als Gruppe v0.2.2
 
 
 
@@ -84,24 +84,25 @@ async function main() {
         roll.then(roll =>{
 
             
-            const tokenName = token.actor.data.name; 
-            const courage = token.actor.data.data.base.basicAttributes.courage.value;
-            const cleverness = token.actor.data.data.base.basicAttributes.cleverness.value;
-            const intuition = token.actor.data.data.base.basicAttributes.intuition.value;
-            const charisma = token.actor.data.data.base.basicAttributes.charisma.value;
-            const dexterity = token.actor.data.data.base.basicAttributes.dexterity.value;
-            const agility = token.actor.data.data.base.basicAttributes.agility.value;
-            const constitution = token.actor.data.data.base.basicAttributes.constitution.value;
-            const strength = token.actor.data.data.base.basicAttributes.strength.value;
-            const magicResistance = token.actor.data.data.base.combatAttributes.passive.magicResistance.value; 
+            const tokenName = token.actor.name; 
+            const courage = token.actor.system.base.basicAttributes.courage.value;
+            const cleverness = token.actor.system.base.basicAttributes.cleverness.value;
+            const intuition = token.actor.system.base.basicAttributes.intuition.value;
+            const charisma = token.actor.system.base.basicAttributes.charisma.value;
+            const dexterity = token.actor.system.base.basicAttributes.dexterity.value;
+            const agility = token.actor.system.base.basicAttributes.agility.value;
+            const constitution = token.actor.system.base.basicAttributes.constitution.value;
+            const strength = token.actor.system.base.basicAttributes.strength.value;
+            const magicResistance = token.actor.system.base.combatAttributes.passive.magicResistance.value; 
             
             let w1 = roll.terms[0].results[0].result;
             let w2 = roll.terms[0].results[1].result;
             let w3 = roll.terms[0].results[2].result;
             if(typauswahl == 0){
                 talentName = talentSelect.value
-                talent = token.actor.items.find(item => item.data.name == talentName);
-                talentValue = talent.data.data.value;
+                talent = token.actor.items.find(item => item.name == talentName);
+                talentUnd = (talent === undefined)? 1: 0;
+                if(talentUnd == 1){talentValue = 0}else{talentValue = talent.system.value};
                 if (isNaN(talentValue) || talentValue === "" || talentValue == null){
                     talentValue = 0
                 }
