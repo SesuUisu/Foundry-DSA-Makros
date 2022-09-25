@@ -1,4 +1,6 @@
 // v0.2 Adlerschwinge 
+
+
 main();
 
 async function main() {
@@ -95,20 +97,22 @@ async function main() {
         tawPa = raufen.system.combat.parry;
         atBase = token.actor.system.base.combatAttributes.active.baseAttack.value;
         paBase = token.actor.system.base.combatAttributes.active.baseParry.value;
+        doBase = token.actor.system.base.combatAttributes.active.dodge.value;
         iniBase = token.actor.system.base.combatAttributes.active.baseInitiative.value;
         
         tempAt = zfAt - atBase - tawAt + atMod;
         tempPa = zfPa - paBase - tawPa + paMod;
+        tempDo = zfPa - doBase - tawPa + paMod;
         tempMove = gs - baseGs
                
-        await applyEffect(token, time, raufen, tempAt, tempPa, tempMove,tempDex,tempAgi,tempCon,tempStr, rs);
+        await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove,tempDex,tempAgi,tempCon,tempStr, rs);
     };
     
 
 
 
 
-    function applyEffect(token, time, raufen, tempAt, tempPa ,tempMove,tempRs,tempDex,tempAgi,tempCon,tempStr) {
+    function applyEffect(token, time, raufen, tempAt, tempPa , tempDo, tempMove,tempRs,tempDex,tempAgi,tempCon,tempStr) {
         
         effectData = [
             
@@ -139,6 +143,11 @@ async function main() {
             {
                 key: "system.base.combatAttributes.active.baseParry.value",
                 value: tempPa,
+                mode: CONST.ACTIVE_EFFECT_MODES.ADD
+            },
+            {
+                key: "system.base.combatAttributes.active.dodge.value",
+                value: tempDo,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
