@@ -1,4 +1,4 @@
-// v0.2 Adlerschwinge 
+// v0.3 Adlerschwinge 
 
 
 main();
@@ -100,10 +100,31 @@ async function main() {
         doBase = token.actor.system.base.combatAttributes.active.dodge.value;
         iniBase = token.actor.system.base.combatAttributes.active.baseInitiative.value;
         
+        dod = (doBase > paBase)? 1 : 0;
+        dodgeMod = 0
+        if(dod === 1){
+            flink = token.actor.items.find(item => item.name === "Flink" && item.type === "advantage");
+            auswEins = token.actor.items.find(item => item.name === "Ausweichen I" && item.type === "specialAbility");
+            auswZwei = token.actor.items.find(item => item.name === "Ausweichen II" && item.type === "specialAbility");
+            auswDrei = token.actor.items.find(item => item.name === "Ausweichen III" && item.type === "specialAbility");
+            flinkMod = (flink === undefined)? 0 : flink.system.value;
+            ausEinsMod = (auswEins === undefined)? 0 : 3;
+            ausZweiMod = (auswZwei === undefined)? 0 : 3;
+            ausDreiMod = (auswDrei === undefined)? 0 : 3;
+            
+            dodgeMod += flinkMod + ausEinsMod + ausZweiMod + ausDreiMod;
+
+        }
+
+        behabig = token.actor.items.find(item => item.name === "Behäbig" && item.type === "disadvantage");
+        behabigMod = (behabig === undefined)? 0 : -1;
+        dodgeMod += behabigMod;
+
+        
         tempAt = zfAt - atBase - tawAt + atMod;
-        tempPa = zfPa - paBase - tawPa + paMod;
-        tempDo = zfPa - doBase - tawPa + paMod;
-        tempMove = gs - baseGs
+        tempPa = zfPa - paBase - tawPa + paMod + dodgeMod;
+        tempDo = zfPa - doBase + dodgeMod;
+        tempMove = gs - baseGs;
                
         await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove,tempDex,tempAgi,tempCon,tempStr, rs);
     };
