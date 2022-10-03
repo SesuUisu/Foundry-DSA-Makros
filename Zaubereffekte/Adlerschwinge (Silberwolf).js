@@ -4,14 +4,6 @@
 main();
 
 async function main() {
-    //Überprüfe, ob ein Token ausgewählt wurde
-     if (canvas.tokens.controlled.length === 0 || canvas.tokens.controlled.length > 1) {
-        ui.notifications.error("Bitte einen Token auswählen.");
-        return;
-    };
-    
-    
-    
     //Tierwerte maximal
     const tier = "Silberwolf";
     const at = 10;
@@ -28,15 +20,28 @@ async function main() {
     const aup = 100;
  */   
     
+    const tokens = canvas.tokens.controlled;
+    const adlerschwinge = token.actor.items.find(item => item.name === "Adlerschwinge Wolfsgestalt (" + tier + ")");
+    //Überprüfe, ob ein Token ausgewählt wurde
+     if (canvas.tokens.controlled.length === 0 || canvas.tokens.controlled.length > 1) {
+        ui.notifications.error("Bitte einen Token auswählen.");
+        return;
+    };
+    if (adlerschwinge === undefined) {
+        ui.notifications.error("Bitte einen Token mit Adlerschwinge auswählen.");
+        return;
+    };
+    
+    
     
     //Charakter Werte
-    const tokens = canvas.tokens.controlled;
     const tokenName = token.actor.name;
     const baseDex = token.actor.system.base.basicAttributes.dexterity.value;
     const baseAgi = token.actor.system.base.basicAttributes.agility.value;
     const baseCon = token.actor.system.base.basicAttributes.constitution.value;
     const baseStr = token.actor.system.base.basicAttributes.strength.value;
     const baseGs = token.actor.system.base.movement.speed.value;
+    const zfw = (adlerschwinge.system.value === 0)? 1 : adlerschwinge.system.value;
 
     //Dialog-input
     const divFlexStart = "<div style='display:flex'><span style='flex:1'>";
@@ -72,8 +77,6 @@ async function main() {
     //Funktion
     async function htmlCallback(html){
         //Zauberwert
-        adlerschwinge = token.actor.items.find(item => item.name === "Adlerschwinge Wolfsgestalt (" + tier + ")");
-        zfw = (adlerschwinge.system.value === 0)? 1 : adlerschwinge.system.value;
         
         zfAt = Math.min(at, zfw * 2);
         zfPa = Math.min(pa, zfw * 2);
@@ -124,7 +127,7 @@ async function main() {
         tempAt = zfAt - atBase - tawAt + atMod;
         tempPa = zfPa - paBase - tawPa + paMod + dodgeMod;
         tempDo = zfPa - doBase + dodgeMod;
-        tempMove = gs - baseGs;
+        tempMove = gs - baseGs + flinkMod + behabigMod;
                
         await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove,tempDex,tempAgi,tempCon,tempStr, rs);
     };
