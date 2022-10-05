@@ -1,3 +1,5 @@
+//Armatrutz v0.0.2
+
 "use strict";
 main();
 
@@ -31,7 +33,7 @@ async function main() {
 
     
     new Dialog({
-        title: "Attributo",
+        title: "Armatrutz",
         content: headerDialog + valueDialog,
         buttons: {
             close: {
@@ -52,13 +54,14 @@ async function main() {
 
     async function htmlCallback(html) {
         const value = Number(html.find("#attr_mod")[0]?.value || 0);
+        const vaeContent = "zusätzlicher RS: " + value;
         const timeValue = 5;
         
-        await applyEffect(token,  value, timeValue);
+        await applyEffect(token,value,timeValue,vaeContent);
     }
 
 
-    function getEffectData(value, timeValue) {
+    function getEffectData(value, timeValue,vaeContent) {
         const attrChanges = [
              {
                 key: "system.base.combatAttributes.passive.physicalResistance.value",
@@ -79,27 +82,31 @@ async function main() {
                 core: {
                     statusId: armatrutz_key,
                 },
+                "visual-active-effects.data":{
+                    intro: "Armatrutz aktiviert",
+                    content: vaeContent,
+                }
             },
         };
     }
 
-    async function applyEffect(token, value, timeValue) {
+    async function applyEffect(token, value, timeValue,vaeContent) {
         if (value > 0) {
-            const effectData = getEffectData( value, timeValue);
-            return setEffect(token, effectData, armatrutz_key, timeValue);
+            const effectData = getEffectData( value, timeValue,vaeContent);
+            return setEffect(token, effectData, armatrutz_key, timeValue,vaeContent);
         } else {
-            return removeEffect(token, armatrutz_key, timeValue);
+            return removeEffect(token, armatrutz_key, timeValue,vaeContent);
         }
     }
 
-    function removeEffect(token, effect_id, timeValue) {
+    function removeEffect(token, effect_id, timeValue,vaeContent) {
         let effect = token.actor.effects.find((effect) => effect.getFlag('core', 'statusId') === effect_id);
         if (effect) {
             return effect.delete();
         }
     }
 
-    function setEffect(token, effectData, effect_id, timeValue) {
+    function setEffect(token, effectData, effect_id, timeValue,vaeContent) {
         let effect = token.actor.effects.find((effect) => effect.getFlag('core', 'statusId') === effect_id);
         if (effect) {
             return effect.update(effectData);

@@ -1,4 +1,4 @@
-//v0.2 Tokeneffekt für Zauberopfer
+//v0.2.1 Tokeneffekt für Zauberopfer
 
 main();
 
@@ -62,48 +62,59 @@ async function main() {
             atMod = Math.ceil(zfp / 2);
             paMod = Math.floor(zfp / 2);
         };
+            iniDebuff = 0 - Math.round(zfw  * blindMod);
+            fkDebuff = 0 - Math.round(zfp  * blindMod);
+            atDebuff = 0 - Math.round(atMod  * blindMod);
+            paDebuff = 0 - Math.round(paMod  * blindMod);
+        
+        vaeContent = "Alle Zauber und Talente: " + fkDebuff + "<br><br><u>Automatisch berechnet</u><br>Attacke: " +  atDebuff + "<br>Parade: " +  paDebuff + "<br>Ausweichen: " +  paDebuff + "<br>Fernkampf: " +  fkDebuff + "<br>Initiative: " + iniDebuff; 
         
         effectData = [
             {
                 key: "system.base.combatAttributes.active.baseInitiative.value",
-                value: 0 - Math.round(zfw  * blindMod),
-                mode: CONST.ACTIVE_EFFECT_MODES.ADD
-            },
-            {
-                key: "system.base.combatAttributes.active.baseRangedAttack.value",
-                value: 0 - Math.round(zfp  * blindMod),
+                value: iniDebuff,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
                 key: "system.base.combatAttributes.active.baseAttack.value",
-                value: 0 - Math.round(atMod  * blindMod),
+                value: atDebuff,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
                 key: "system.base.combatAttributes.active.baseParry.value",
-                value: 0 - Math.round(paMod  * blindMod),
+                value: paDebuff,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
-   /*         {
+            {
                 key: "base.combatAttributes.active.dodge.value",
-                value: 0 - Math.round(paMod  * blindMod),
+                value: paDebuff,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
-            }
-   */         
+            },
+            {
+                key: "system.base.combatAttributes.active.baseRangedAttack.value",
+                value: fkDebuff,
+                mode: CONST.ACTIVE_EFFECT_MODES.ADD
+            },
+            
         ];
-        effecDuration = Math.round(zfw / 4);
+        
+        
+        effecDuration = zfw * 3;
         effect = {
             label: "Blitz dich find",
             icon: "icons/svg/lightning.svg",
             tint: "#d9bf3a",
             changes: effectData,
             duration: {
-                "rounds": effecDuration,
-                "turns": 1,
+                "seconds": effecDuration,
                 },
             flags: {
                 core: {
                     statusId: "Blitzdichfind"
+                },
+                "visual-active-effects.data":{
+                    intro: "Debuff durch Blitz dich find",
+                    content: vaeContent,
                 }
             },
         };
