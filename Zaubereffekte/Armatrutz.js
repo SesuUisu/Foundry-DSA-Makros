@@ -69,7 +69,7 @@ async function main() {
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD,
             },
         ];
-        effectDuration = timeValue * 60;
+        const effectDuration = timeValue * 60;
         return {
             label: "Armatrutz",
             icon: "modules/game-icons-net/whitetransparent/armor-upgrade.svg",

@@ -86,7 +86,7 @@ async function main() {
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
-                key: "base.combatAttributes.active.dodge.value",
+                key: "system.base.combatAttributes.active.dodge.value",
                 value: paDebuff,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },

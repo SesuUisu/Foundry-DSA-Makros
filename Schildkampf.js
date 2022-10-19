@@ -15,29 +15,6 @@ async function main() {
     let tokenName = token.actor.name;
     
     
-    
-    
- /*
-    const weaponID = token.actor.system.base.combatState.primaryHand
-    const weaponData = token.actor.items.find(item => item._id === weaponID);
-    weaponType = weaponData.system.talents;
-
-
-    Waffen-PA >=15 PA+1
-    Waffen-PA >=18 PA+1
-    Waffen-PA >=21 PA+1
-  
-    weaponType.forEach(getParry);
-    function getParry(combatTalent){
-        combatStyle = token.actor.items.find(item => item.name === combatTalent && item.type === "combatTalent")
-        talentValue = combatStyle.system.value; 
-        
-        
-    };
- */ 
-        
-        
-        
         
         
     let lefthandSF = (token.actor.items.find(item => item.name === "Linkhand" && item.type === "specialAbility") === undefined)? 0: 1;
@@ -50,9 +27,9 @@ async function main() {
     let vaeContent1 = (lefthandSF != 0)? "Parade-Bonus durch Linkhand<br>": "";
     let vaeContent2 = (shieldSF != 0)? "Parade-Bonus durch Schildkampf I<br>": "";
     let vaeContent3 = (shieldAdSF != 0)? "Parade-Bonus durch Schildkampf II<br>": "";
-    let vaeContent4 = (shieldMasterSF != 0)? "Parade-Bonus durch Waffenmeister (Schild)":"";
+    let vaeContent4 = (shieldMasterSF != 0)? "Parade-Bonus durch Waffenmeister (Schild)<br>":"";
         
-    let vaeContent = vaeContent1 + vaeContent2 + vaeContent3 + vaeContent4;
+    let vaeContent = vaeContent1 + vaeContent2 + vaeContent3 + vaeContent4 + "<br>Waffen-PA-Bonus wird nicht berücksichtigt.";
         
 
 

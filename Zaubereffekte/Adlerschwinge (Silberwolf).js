@@ -1,4 +1,4 @@
-// v0.3 Adlerschwinge 
+// v0.3.1 Adlerschwinge 
 
 
 main();
@@ -41,6 +41,7 @@ async function main() {
     const baseCon = token.actor.system.base.basicAttributes.constitution.value;
     const baseStr = token.actor.system.base.basicAttributes.strength.value;
     const baseGs = token.actor.system.base.movement.speed.value;
+    const baseRS = token.actor.system.base.combatAttributes.passive.physicalResistance.value;
     const zfw = (adlerschwinge.system.value === 0)? 1 : adlerschwinge.system.value;
 
     //Dialog-input
@@ -81,19 +82,18 @@ async function main() {
         zfAt = Math.min(at, zfw * 2);
         zfPa = Math.min(pa, zfw * 2);
         
-        tempDex = Math.min(ff, zfw * 2) - baseDex;
-        tempAgi = Math.min(ge, zfw * 2) - baseAgi;
-        tempCon = Math.min(ko, zfw * 2) - baseCon;
-        tempStr = Math.min(kk, zfw * 2) - baseStr;
+        tempDex = baseDex - Math.min(ff, zfw * 2);
+        tempAgi = baseAgi - Math.min(ge, zfw * 2);
+        tempCon = baseCon - Math.min(ko, zfw * 2);
+        tempStr = baseStr - Math.min(kk, zfw * 2);
         
         time = Number(html.find("#nmbr_time")[0]?.value || 0);
         
         //Kampfwert
         raufen = token.actor.items.find(item => item.name === "Raufen");
         taw = raufen.system.value;
-
-        atMod = (taw > 5 && zfw > at * 0.5)? Math.ceil(taw * 0.5) : 0;
-        paMod = (taw > 5 && zfw > pa * 0.5)? Math.floor(taw * 0.5) : 0;
+        atMod = (taw >= 5 && zfw > (at * 0.5))? Math.ceil(taw * 0.5) : 0;
+        paMod = (taw >= 5 && zfw > (pa * 0.5))? Math.floor(taw * 0.5) : 0;
         
         
         tawAt = raufen.system.combat.attack;
@@ -104,13 +104,19 @@ async function main() {
         iniBase = token.actor.system.base.combatAttributes.active.baseInitiative.value;
         
         dod = (doBase > paBase)? 1 : 0;
-        dodgeMod = 0
+        dodgeMod = 0;
+        tempRs = 0;
+        flinkMod = 0;
+        ausEinsMod = 0;
+        ausZweiMod = 0;
+        ausDreiMod = 0;
+        
         if(dod === 1){
             flink = token.actor.items.find(item => item.name === "Flink" && item.type === "advantage");
             auswEins = token.actor.items.find(item => item.name === "Ausweichen I" && item.type === "specialAbility");
             auswZwei = token.actor.items.find(item => item.name === "Ausweichen II" && item.type === "specialAbility");
             auswDrei = token.actor.items.find(item => item.name === "Ausweichen III" && item.type === "specialAbility");
-            flinkMod = (flink === undefined)? 0 : flink.system.value;
+            flinkMod = (flink === undefined)? 0 : flink.system.value;  
             ausEinsMod = (auswEins === undefined)? 0 : 3;
             ausZweiMod = (auswZwei === undefined)? 0 : 3;
             ausDreiMod = (auswDrei === undefined)? 0 : 3;
@@ -126,37 +132,39 @@ async function main() {
         
         tempAt = zfAt - atBase - tawAt + atMod;
         tempPa = zfPa - paBase - tawPa + paMod + dodgeMod;
-        tempDo = zfPa - doBase + dodgeMod;
+        tempDo = zfPa - doBase + paMod + dodgeMod;
         tempMove = gs - baseGs + flinkMod + behabigMod;
+        tempRs = rs - baseRS;
                
-        await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove,tempDex,tempAgi,tempCon,tempStr, rs);
+        await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove, tempDex, tempAgi, tempCon, tempStr, tempRs);
+console.log(rs,baseRS,tempRs)        
     };
     
 
 
 
 
-    function applyEffect(token, time, raufen, tempAt, tempPa , tempDo, tempMove,tempRs,tempDex,tempAgi,tempCon,tempStr) {
-        
+    function applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove, tempDex, tempAgi, tempCon, tempStr, tempRs) {
+        vaeContent = "@UUID[JournalEntry.SYslwuvdsOgmaUjK.JournalEntryPage.b093GXesQYnYs3Nj]{Silberwolf - Werte}"
         effectData = [
             
             {
                 key: "system.base.basicAttributes.dexterity.value",
-                value: tempDex,
+                value: -tempDex,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },{
                 key: "system.base.basicAttributes.agility.value",
-                value: tempAgi,
+                value: -tempAgi,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
                 key: "system.base.basicAttributes.constitution.value",
-                value: tempCon,
+                value: -tempCon,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
                 key: "system.base.basicAttributes.strength.value",
-                value: tempStr,
+                value: -tempStr,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
@@ -176,7 +184,7 @@ async function main() {
             },
             {
                 key: "system.base.combatAttributes.passive.physicalResistance.value",
-                value: rs,
+                value: tempRs,
                 mode: CONST.ACTIVE_EFFECT_MODES.ADD
             },
             {
@@ -197,6 +205,10 @@ async function main() {
             flags: {
                 core: {
                     statusId: "Wolfsgestalt"
+                },
+                "visual-active-effects.data":{
+                    intro: "Adlerschwinge Wolfsgestalt (" + tier + ")",
+                    content: vaeContent,
                 }
             },
         };
