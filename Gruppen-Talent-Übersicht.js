@@ -1,3 +1,5 @@
+//Gruppenübersicht v0.5
+
 main();
 
 async function main() {
@@ -35,6 +37,8 @@ async function main() {
 //Fehlende SF: Ortskenntnis, Talentspezialisierung
     const magskill = ["Apport","Astrale Meditation","Aura verhüllen","Aurapanzer","Bannschwert","Blutmagie","Chimärenmeister","Dämonenbindung I","Dämonenbindung II","Druidenrache","Eiserner Wille I","Eiserner Wille II","Elementarharmonisierte Aura","Exorzist","Fernzauberei","Form der Formlosigkeit","Geber der Gestalt","Gedankenschutz","Gefäß der Sterne","Golembauer","Große Meditation","Höhere Dämonenbindung","Hypervehemenz","Invocatio Integra","Konzentrationsstärke","Kraftkontrolle","Kraftlinienmagie I","Kraftlinienmagie II","Kraftspeicher","Lockeres Zaubern","Matrixgeber","Matrixkontrolle","Matrixregeneration I","Matrixregeneration II","Matrixverständnis","Meisterliche Regeneration","Meisterliche Zauberkontrolle I","Meisterliche Zauberkontrolle II","Merkmalskenntnis :Dämonisch","Merkmalskenntnis: Dämonisch (Agrimoth)","Merkmalskenntnis: Dämonisch (Amazeroth)","Merkmalskenntnis: Dämonisch (Asfaloth)","Merkmalskenntnis: Dämonisch (Belhalhar)","Merkmalskenntnis: Dämonisch (Belzhorash)","Merkmalskenntnis: Dämonisch (Blakharaz)","Merkmalskenntnis: Dämonisch (Lolgramoth)","Merkmalskenntnis: Dämonisch (Thargunitoth)","Merkmalskenntnis: Elementar","Merkmalskenntnis: Elementar (Eis)","Merkmalskenntnis: Elementar (Erz)","Merkmalskenntnis: Elementar (Feuer)","Merkmalskenntnis: Elementar (Humus)","Merkmalskenntnis: Elementar (Luft)","Merkmalskenntnis: Elementar (Wasser)","Merkmalskenntnis: Geisterwesen","Merkmalskenntnis: Heilung","Merkmalskenntnis: Herbeirufung","Merkmalskenntnis: Illusion","Merkmalskenntnis: Schaden","Merkmalskenntnis: Telekinese","Merkmalskenntnis: Verständigung","Merkmalskenntnis: Antimagie","Merkmalskenntnis: Beschwörung","Merkmalskenntnis: Eigenschaften","Merkmalskenntnis: Einfluss","Merkmalskenntnis: Form","Merkmalskenntnis: Hellsicht","Merkmalskenntnis: Herrschaft","Merkmalskenntnis: Kraft","Merkmalskenntnis: Objekt","Merkmalskenntnis: Umwelt","Merkmalskenntnis: Limbus","Merkmalskenntnis: Metamagie","Merkmalskenntnis: Temporal","Nekromant","Ottagaldr","Regeneration I","Regeneration II","Runenkunde","Salasandra","Semipermanenz I","Semipermanenz II","Signaturkenntnis","Simultanzauber","Stapeleffekt","Tanz der Mada","Tierischer Begleiter","Traumgänger","Verbotene Pforten","Vertrautenbindung","Vielfache Ladungen","Zauber bereithalten","Zauber vereinigen","Zauberkontrolle","Zauberroutine","Zauberzeichen"];
 //Fehlende SF: Bann und Schutzkreise, Dolchrituale, Herrschaftsrituale, Elfenlieder, Geodenrituale,Hexenflüche, Keulenritual,Kristallomantische Rituale,Kugelzauber,Odûn-Gaben,Schalenzauber,Schamanistische Rituale,Schlangenring-Zauber,Schuppenbeutel,Stabzauber,Trommelzauber, Zauberspezialisierungen, Zauberzeichen, Zibilja-Rituale
+    const combatskill = ["Aufmerksamkeit","Ausfall","Ausweichen I","Ausweichen II","Ausweichen III","Befreiungsschlag","Beidhändiger Kampf I","Beidhändiger Kampf II","Berittener Schütze","Betäubungsschlag","Binden","Blindkampf","Defensiver Kampfstil","Doppelangriff","Eisenhagel","Entwaffnen","Festnageln","Finte","Formation","Gegenhalten","Geschützmeister","Gezielter Stich","Halbschwert","Hammerschlag","Improvisierte Waffen","Kampf in Wasser","Kampfgespür","Kampfreflexe","Klingensturm","Klingentänzer","Klingenwand","Kriegsreiterei","Linkhand","Meisterliches Entwaffnen","Meisterparade","Meisterschütze (Armbrust)","Meisterschütze (Blasrohr)","Meisterschütze (Bogen)","Meisterschütze (Schleuder)","Meisterschütze (Wurfbeile)","Meisterschütze (Wurfmesser)","Meisterschütze (Wurfspeere)","Niederwerfen","Parierwaffen I","Parierwaffen II","Reiterkampf","Rüstungsgewöhnung I","Rüstungsgewöhnung II","Rüstungsgewöhnung III","Scharfschütze (Armbrust)","Scharfschütze (Blasrohr)","Scharfschütze (Bogen)","Scharfschütze (Schleuder)","Scharfschütze (Wurfbeile)","Scharfschütze (Wurfmesser)","Scharfschütze (Wurfspeere)","Schildkampf I","Schildkampf II","Schildspalter","Schnellladen (Armbrust)","Schnellladen (Bogen)","Schnellziehen","Spießgespann","Sturmangriff","Tod von Links","Todesstoß","Turnierreiterei","Umreißen","Unterwasserkampf","Waffe zerbrechen","Waffenmaster (Schild)","Waffenloser Kampfstil: Bornländisch","Waffenloser Kampfstil: Gladiatorenstil","Waffenloser Kampfstil: Hammerfaust","Waffenloser Kampfstil: Hruruzat","Waffenloser Kampfstil: Mercenario","Waffenloser Kampfstil: Unauer Schule","Windmühle","Wuchtschlag"] 
+//fehlende SF: Rüstungsgewöhnung I-Typen, Waffenmeister (Waffe), Waffenlose Kampfmanöver
     const talentList = nature.concat(physical,social,known,labour,fight,longrange,spell,ritualknown,gift);
     const vantageList = advantage.concat(disadvantage);
     const attribute = ["courage","cleverness","intuition","charisma","dexterity","agility","constitution","strength"]
@@ -46,6 +50,8 @@ async function main() {
     countSkill = 0;
     magskillValueList = {};
     countMagskill = 0;
+    combatskillValueList = {};
+    countCombatskill = 0;
     vantageValueList = {};
     countVantage = 0;
     langueValueList = {};
@@ -168,6 +174,28 @@ async function main() {
             };
             magskillValueName = magskillValueList[talentName];
             magskillValueName.push(talentValue);
+        };   
+        combatskill.forEach(checkCombatskill);
+        function checkCombatskill(talentName){
+            talent = token.actor.items.find(item => item.name === talentName && item.type === "specialAbility"); 
+            
+            //Datenbereinigung
+            if(talent == undefined){
+                talentValue = undefined;
+            }else{
+                talentValue = talent.system.value;
+                if(talentValue == null || talentValue == 0){
+                    talentValue = "✓";
+                };
+            }; 
+            
+            //Füge Werte zum Talentobjekt
+            if(countCombatskill < combatskill.length){
+                countCombatskill += 1;
+                combatskillValueList[talentName] = [];
+            };
+            combatskillValueName = combatskillValueList[talentName];
+            combatskillValueName.push(talentValue);
         };        
         langue.forEach(checkLangue);
         function checkLangue(talentName){
@@ -255,6 +283,7 @@ async function main() {
     advantageOutput = textDetailStart + "Vorteile" + textDetailMid; 
     disadvantageOutput = textDetailStart + "Nachteile" + textDetailMid; 
     skillOutput = textDetailStart + "Sonderfertigkeiten" + textDetailMid; 
+    combatskillOutput = textDetailStart + "Kampf-Sonderfertigkeiten" + textDetailMid
     magskillOutput = textDetailStart + "Magische Sonderfertigkeiten" + textDetailMid; 
     
     
@@ -282,6 +311,7 @@ async function main() {
         disadvantageOutput += nameAdd + etr;
         skillOutput += nameAdd + etr;
         magskillOutput += nameAdd + etr;
+        combatskillOutput += nameAdd + etr;
     
 
     //Sortierfunktion
@@ -459,7 +489,25 @@ async function main() {
             talentAdd = tr + tdl + talentName + etd + talentValueOutput + etr;
             magskillOutput += talentAdd;
         };
-    };     
+    };  
+    Object.keys(combatskillValueList).forEach(outputCombatskillFunction);
+    function outputCombatskillFunction(talentName){
+        //Säubern von unnötigen Talenten
+        talentValueOutput = "";
+        countUndefined = 0;
+        for (let i = 0; i < tokenLength; i++){
+            talentValueSingle = combatskillValueList[talentName][i];
+            if(talentValueSingle == undefined){
+                talentValueSingle = "&nbsp;"
+                countUndefined += 1;
+            };
+            talentValueOutput += td + talentValueSingle + etd;
+        };
+        if(countUndefined < tokenLength){
+            talentAdd = tr + tdl + talentName + etd + talentValueOutput + etr;
+            combatskillOutput += talentAdd;
+        };
+    };    
     Object.keys(langueValueList).forEach(outputLangueFunction);
     function outputLangueFunction(talentName){
         //Säubern von unnötigen Talenten
@@ -518,6 +566,7 @@ async function main() {
     disadvantageOutput += textDetailEnd;
     skillOutput += textDetailEnd;
     magskillOutput += textDetailEnd;
+    combatskillOutput += textDetailEnd;
 
 
     //Dialog
@@ -527,7 +576,7 @@ async function main() {
     }
     </style>`
 
-    dialogInput = attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
+    dialogInput = attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + combatskillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
     
     
     windowWidth = tokenLength * 60 + 180

@@ -1,4 +1,4 @@
-// v0.3.1 Adlerschwinge 
+// v0.3.2 Adlerschwinge 
 
 
 main();
@@ -92,8 +92,8 @@ async function main() {
         //Kampfwert
         raufen = token.actor.items.find(item => item.name === "Raufen");
         taw = raufen.system.value;
-        atMod = (taw >= 5 && zfw > (at * 0.5))? Math.ceil(taw * 0.5) : 0;
-        paMod = (taw >= 5 && zfw > (pa * 0.5))? Math.floor(taw * 0.5) : 0;
+        atMod = (taw >= 5 && zfw >= (at * 0.5))? Math.ceil(taw * 0.5) : 0;
+        paMod = (taw >= 5 && zfw >= (pa * 0.5))? Math.floor(taw * 0.5) : 0;
         
         
         tawAt = raufen.system.combat.attack;
@@ -135,9 +135,8 @@ async function main() {
         tempDo = zfPa - doBase + paMod + dodgeMod;
         tempMove = gs - baseGs + flinkMod + behabigMod;
         tempRs = rs - baseRS;
-               
-        await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove, tempDex, tempAgi, tempCon, tempStr, tempRs);
-console.log(rs,baseRS,tempRs)        
+
+        await applyEffect(token, time, raufen, tempAt, tempPa, tempDo, tempMove, tempDex, tempAgi, tempCon, tempStr, tempRs);        
     };
     
 
