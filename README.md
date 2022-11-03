@@ -1,4 +1,10 @@
-# DSA-Regeneration-Makro
+# Kampf
+## Schadensinput
+
+## Schildkampf
+
+# Heilung
+## DSA-Regeneration-Makro
 
 Makro zur Vereinfachung der nächtlichen Regeneration
 Berücksichtigt:
@@ -11,12 +17,22 @@ Berücksichtigt:
 Vor- und Nachteile, sowie Sonderfertigkeiten werden automatisch ausgefüllt und ausgewürfelt. 
 LeP, AsP, KaP und AuP werden im Token aktualisiert.
 
-#Gruppenübersicht
+## Heilkunde Wunden
+- alle 4 Heilvarianten sind auswählbar und geben entsprechende Auswirkungen aus
+- übernimmt LeP unter 0 und Wundenanzahl von anvisierten Token automatisch
+-AsP bei Meisterhandwerk werden automatisch abgezogen
 
-zeigt die Vor-/Nachteile, Talente, Zauber, Gaben in einem Fenster der ausgewählten Charaktere an
+# SL-Makro
+## Gruppenübersicht
+
+zeigt die Vor-/Nachteile, SF, Talente, Zauber, Gaben in einem Fenster der ausgewählten Charaktere an
+
+TODO: 
+- Fehlende Vor-/Nachteile, Rituale/Lieder/Flüche/..., Waffenlose Manöver/Stile, ... einfügen
+- pLeP/pAsP etc?
 
 
-# Gruppen-Talentwurf
+## Gruppen-Talentwurf
 
 Makro zum Würfeln von Gruppenwürfen auf 
 - Menschenkenntnis
@@ -25,5 +41,7 @@ Makro zum Würfeln von Gruppenwürfen auf
 - Eigenschaften (inkl. MR)
 
 # Zaubereffekte
-- Adlerschwinge (für Silberwolf)
+- Adlerschwinge (für Silberwolf mit Hausregeln)
+- Armatrutz
 - Blitz dich find
+- Schreckgestalt 1
