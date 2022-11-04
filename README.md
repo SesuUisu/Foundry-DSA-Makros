@@ -1,7 +1,11 @@
 # Kampf
 ## Schadensinput
+- TP/SP
+- LeP/AuP/AuP+LeP*0,5
 
 ## Schildkampf
+- SF-Boni als Effekt
+
 
 # Heilung
 ## DSA-Regeneration-Makro
@@ -31,6 +35,8 @@ TODO:
 - Fehlende Vor-/Nachteile, Rituale/Lieder/Flüche/..., Waffenlose Manöver/Stile, ... einfügen
 - pLeP/pAsP etc?
 
+## Bibliothek
+- würfelt auf Tabellen nach WdZ 104
 
 ## Gruppen-Talentwurf
 
@@ -43,5 +49,6 @@ Makro zum Würfeln von Gruppenwürfen auf
 # Zaubereffekte
 - Adlerschwinge (für Silberwolf mit Hausregeln)
 - Armatrutz
+- Axxeleratus
 - Blitz dich find
 - Schreckgestalt 1
