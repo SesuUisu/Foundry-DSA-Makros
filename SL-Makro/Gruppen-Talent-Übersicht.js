@@ -1,4 +1,4 @@
-//Gruppenübersicht v0.5
+//Gruppenübersicht v0.0.6
 
 main();
 
@@ -41,7 +41,8 @@ async function main() {
 //fehlende SF: Rüstungsgewöhnung I-Typen, Waffenmeister (Waffe), Waffenlose Kampfmanöver
     const talentList = nature.concat(physical,social,known,labour,fight,longrange,spell,ritualknown,gift);
     const vantageList = advantage.concat(disadvantage);
-    const attribute = ["courage","cleverness","intuition","charisma","dexterity","agility","constitution","strength"]
+    const attribute = ["courage","cleverness","intuition","charisma","dexterity","agility","constitution","strength"];
+    const resources = ["vitality","endurance","astralEnergy","karmicEnergy"]
 
     tokenList = [];
     talentValueList = {};
@@ -60,6 +61,8 @@ async function main() {
     countScript = 0;
     attValueList = {};
     countAtt = 0;
+    resValueList = {};
+    countRes = 0;
 
        
     //Funktionen
@@ -71,10 +74,25 @@ async function main() {
         tokenShortName = tokenName.split(" ")[0];
         tokenList.push(tokenShortName);
         
+        //Resourcen
+        resources.forEach(checkRes)
+        function checkRes(resName){
+            resValue = token.actor.system.base.resources[resName].max;
+            resValue = (resValue === 0)? undefined: resValue;
+
+            if(countRes < resources.length){
+                countRes += 1;
+                resValueList[resName] = [];
+            };
+            resValueName = resValueList[resName];
+            resValueName.push(resValue);
+            
+        };
+
         //Eigenschaften
         attribute.forEach(checkAtt)
         function checkAtt(attName){
-        attValue = token.actor.system.base.basicAttributes[attName].value;
+            attValue = token.actor.system.base.basicAttributes[attName].value;
 
             if(countAtt < attribute.length){
                 countAtt += 1;
@@ -267,6 +285,7 @@ async function main() {
     
     //Detail-Boxen einfügen für alle Kategorien
     
+    resOutput = textDetailStart + "Energien" + textDetailMid;
     attOutput = textDetailStart + "Eigenschaften" + textDetailMid;
     fightOutput = textDetailStart + "Nahkampf" + textDetailMid; 
     longrangeOutput = textDetailStart + "Fernkampf" + textDetailMid; 
@@ -294,6 +313,7 @@ async function main() {
     function addName(tokenShortName){
         nameAdd += th + tokenShortName + eth;
     };
+        resOutput += nameAdd + etr;
         attOutput += nameAdd + etr; 
         fightOutput += nameAdd + etr; 
         longrangeOutput += nameAdd + etr;  
@@ -381,7 +401,40 @@ async function main() {
         };
     };
     
-    
+    Object.keys(resValueList).forEach(outputResFunction);
+    function outputResFunction(talentName){
+        //Säubern von unnötigen Talenten
+        talentValueOutput = "";
+        countUndefined = 0;
+        switch(talentName){
+          case "vitality": 
+                talentNameOutput = "Lebensenergie";
+                break;
+          case "endurance": 
+                talentNameOutput = "Ausdauer";
+                break;
+          case "astralEnergy": 
+                talentNameOutput = "Astralenergie";
+                break;
+          case "karmicEnergy": 
+                talentNameOutput = "Karmaenergie";
+                break;
+        };
+        for (let i = 0; i < tokenLength; i++){
+            talentValueSingle = resValueList[talentName][i];
+            if(talentValueSingle == undefined){
+                talentValueSingle = "&nbsp;"
+                countUndefined += 1;
+            };
+            highValue = resValueList[talentName]
+            tdColor = (Math.max(...highValue.filter(Number.isFinite))=== talentValueSingle)? tdMax : (Math.min(...highValue.filter(Number.isFinite))===talentValueSingle)? tdMin : td;
+            talentValueOutput += tdColor + talentValueSingle + etd;
+        };
+        if(countUndefined < tokenLength){
+            talentAdd = tr + tdl + talentNameOutput + etd + talentValueOutput + etr;
+            resOutput += talentAdd;
+        };
+    };    
     Object.keys(attValueList).forEach(outputAttFunction);
     function outputAttFunction(talentName){
         //Säubern von unnötigen Talenten
@@ -549,6 +602,7 @@ async function main() {
         };
     };
     //Schließen der Detailbox
+    resOutput += textDetailEnd;
     attOutput += textDetailEnd;
     fightOutput += textDetailEnd; 
     longrangeOutput += textDetailEnd; 
@@ -576,7 +630,7 @@ async function main() {
     }
     </style>`
 
-    dialogInput = attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + combatskillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
+    dialogInput = resOutput + attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + combatskillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
     
     
     windowWidth = tokenLength * 60 + 180

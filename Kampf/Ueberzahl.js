@@ -31,7 +31,7 @@ async function main() {
     const friendDialog = divFlexStart + "Freunde in der Überzahl<input id='check_friends'" + divInputBox + divFlexEnd;
 
     new Dialog({
-        title: "Axxeleratus",
+        title: "Überzahl",
         content: headerDialog + enemyDialog + friendDialog,
         buttons: {
             close: {
