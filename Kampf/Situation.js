@@ -90,28 +90,34 @@ async function main() {
         const invisble_enemy = Boolean(html.find("#invisible")[0]?.checked || false);
         const darkness = Number(html.find("#darkness")[0]?.value || 0);
         const water_fight = Number(html.find("#water_combat")[0]?.value || 0);
+        const water_label= html.find("#water_combat")[0]?.selectedOptions[0]?.label;
         const self_position = Number(html.find("#combat_self_position")[0]?.value || 0);
         const enemy_position = Number(html.find("#combat_enemy_position")[0]?.value || 0);
         const flying_enemy = Boolean(html.find("#flying")[0]?.checked || false);
 
-        await applyEffect(token, invisble_enemy, darkness, water_fight, self_position, enemy_position, flying_enemy);
+        await applyEffect(token, invisble_enemy, darkness, water_fight, water_label,self_position, enemy_position, flying_enemy);
     }
 
-    async function applyEffect(token, invisble_enemy, darkness, water_fight, self_position, enemy_position, flying_enemy) {
+    async function applyEffect(token, invisble_enemy, darkness, water_fight,water_label, self_position, enemy_position, flying_enemy) {
         let at_mod = 0;
         let pa_mod = 0;
         let fk_mod = 0;
+        let situation = "Kampf Situation" ;
         if (darkness > 0) {
             const nachtsicht_ad = token.actor.items.find(item => item.name === "Nachtsicht");
             const daemmerungssicht_ad = token.actor.items.find(item => item.name === "Dämmerungssicht");
+            situation += "<br>Dunkelheitsstufe: " + darkness;
             if (nachtsicht_ad) {
                 at_mod -= Math.min(Math.round(Math.floor(darkness / 2)/2),2);
                 pa_mod -= Math.min(Math.round(Math.ceil(darkness / 2)/2),2);
                 fk_mod -= Math.min(Math.round(darkness/2),5);
+                situation += " (Nachtsicht)"
+
             } else if(daemmerungssicht_ad){
                 at_mod -= Math.round(Math.floor(darkness / 2)/2);
                 pa_mod -= Math.round(Math.ceil(darkness / 2)/2);
                 fk_mod -= Math.round(darkness/2);
+                situation += " (Dämmerungssicht)"
             } else {
                 at_mod -= Math.floor(darkness / 2);
                 pa_mod -= Math.ceil(darkness / 2);
@@ -122,13 +128,17 @@ async function main() {
             at_mod -= 6;
             pa_mod -= 6;
             fk_mod -= 8;
+            situation += "<br> Unsichtbarer Gegner"
         }
 
         if (water_fight > 0) {
             const water_combat_sf = token.actor.items.find(item => item.name === "Kampf im Wasser");
+
+            situation += "<br> "+ water_label
             if (water_combat_sf) {
                 at_mod -= Math.floor(water_fight / 2);
                 pa_mod -= Math.ceil(water_fight / 2);
+                situation +=" (Kampf im Wasser)"
             } else {
                 at_mod -= Math.floor(water_fight / 2) * 2;
                 pa_mod -= Math.ceil(water_fight / 2) * 2;
@@ -137,20 +147,27 @@ async function main() {
         if (self_position === 1) {
             at_mod -= 1;
             pa_mod -= 1;
+            situation += "<br>aus kniender Position heraus"
+
         } else if (self_position === 1) {
             at_mod -= 3;
             pa_mod -= 3;
+            situation += "<br>aus liegender Position heraus"
+
         }
         if (enemy_position === 1) {
             at_mod += 1;
             pa_mod += 3;
+            situation += "<br>gegen Knienden"
         } else if (enemy_position === 2) {
             at_mod += 3;
             pa_mod += 5;
+            situation += "<br>gegen am Boden Liegenden"
         }
         if (flying_enemy) {
             at_mod -= 2;
             pa_mod -= 4;
+            situation += "<br>gegen fliegendes Wesen"
         }
 
 
@@ -190,7 +207,7 @@ async function main() {
                     statusId: effect_key
                 },
                 "visual-active-effects.data": {
-                    intro: "Kampf Situation-Effekt:",
+                    intro: situation,
                     content: vaeContent,
                 }
             },
