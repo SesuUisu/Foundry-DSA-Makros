@@ -99,6 +99,7 @@ async function main() {
     }
 
     async function applyEffect(token, invisble_enemy, darkness, water_fight,water_label, self_position, enemy_position, flying_enemy) {
+        // Wege des Entdeckers s. 136
         let at_mod = 0;
         let pa_mod = 0;
         let fk_mod = 0;
@@ -107,13 +108,13 @@ async function main() {
             const nachtsicht_ad = token.actor.items.find(item => item.name === "Nachtsicht");
             const daemmerungssicht_ad = token.actor.items.find(item => item.name === "Dämmerungssicht");
             situation += "<br>Dunkelheitsstufe: " + darkness;
-            if (nachtsicht_ad) {
+            if (nachtsicht_ad && darkness<16) {
                 at_mod -= Math.min(Math.round(Math.floor(darkness / 2)/2),2);
                 pa_mod -= Math.min(Math.round(Math.ceil(darkness / 2)/2),2);
                 fk_mod -= Math.min(Math.round(darkness/2),5);
                 situation += " (Nachtsicht)"
 
-            } else if(daemmerungssicht_ad){
+            } else if(daemmerungssicht_ad && darkness<16){
                 at_mod -= Math.round(Math.floor(darkness / 2)/2);
                 pa_mod -= Math.round(Math.ceil(darkness / 2)/2);
                 fk_mod -= Math.round(darkness/2);
