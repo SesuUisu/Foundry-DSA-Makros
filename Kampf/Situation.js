@@ -103,11 +103,11 @@ async function main() {
         let at_mod = 0;
         let pa_mod = 0;
         let fk_mod = 0;
-        let situation = "Kampf Situation" ;
+        let situation = "" ;
         if (darkness > 0) {
             const nachtsicht_ad = token.actor.items.find(item => item.name === "Nachtsicht");
             const daemmerungssicht_ad = token.actor.items.find(item => item.name === "Dämmerungssicht");
-            situation += "<br>Dunkelheitsstufe: " + darkness;
+            situation += "Dunkelheitsstufe: " + darkness;
             if (nachtsicht_ad && darkness<16) {
                 at_mod -= Math.min(Math.round(Math.floor(darkness / 2)/2),2);
                 pa_mod -= Math.min(Math.round(Math.ceil(darkness / 2)/2),2);
@@ -129,13 +129,14 @@ async function main() {
             at_mod -= 6;
             pa_mod -= 6;
             fk_mod -= 8;
-            situation += "<br> Unsichtbarer Gegner"
+            if(situation){situation+="<br>"}
+            situation += "Unsichtbarer Gegner"
         }
 
         if (water_fight > 0) {
             const water_combat_sf = token.actor.items.find(item => item.name === "Kampf im Wasser");
-
-            situation += "<br> "+ water_label
+            if(situation){situation+="<br> "}
+            situation += water_label
             if (water_combat_sf) {
                 at_mod -= Math.floor(water_fight / 2);
                 pa_mod -= Math.ceil(water_fight / 2);
@@ -148,27 +149,33 @@ async function main() {
         if (self_position === 1) {
             at_mod -= 1;
             pa_mod -= 1;
-            situation += "<br>aus kniender Position heraus"
+            if(situation){situation+="<br>"}
+            situation += "aus kniender Position heraus"
 
         } else if (self_position === 1) {
             at_mod -= 3;
             pa_mod -= 3;
-            situation += "<br>aus liegender Position heraus"
+            if(situation){situation+="<br>"}
+            situation += "aus liegender Position heraus"
 
         }
+
         if (enemy_position === 1) {
             at_mod += 1;
             pa_mod += 3;
-            situation += "<br>gegen Knienden"
+            if(situation){situation+="<br>"}
+            situation += "gegen Knienden"
         } else if (enemy_position === 2) {
             at_mod += 3;
             pa_mod += 5;
-            situation += "<br>gegen am Boden Liegenden"
+            if(situation){situation+="<br>"}
+            situation += "gegen am Boden Liegenden"
         }
         if (flying_enemy) {
             at_mod -= 2;
             pa_mod -= 4;
-            situation += "<br>gegen fliegendes Wesen"
+            if(situation){situation+="<br>"}
+            situation += "gegen fliegendes Wesen"
         }
 
 
