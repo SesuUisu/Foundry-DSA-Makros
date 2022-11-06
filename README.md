@@ -9,6 +9,9 @@
 ## Überzahl
 * Überzahl-Regel als Effekt
 
+## Wunden
+* Wunden als Effekt
+
 # Heilung
 ## DSA-Regeneration-Makro
 
@@ -28,6 +31,13 @@ LeP, AsP, KaP und AuP werden im Token aktualisiert.
 * AsP bei Meisterhandwerk werden automatisch abgezogen
 
 # SL-Makro
+
+## Bibliothek
+* würfelt auf Tabellen nach WdZ 104
+
+## Dunkelheitseinstellung
+* nach den Dunkelheitsstufen des WdE 136
+
 ## Gruppenübersicht
 Fenster mit Werten von ausgewählten Token
 
@@ -40,8 +50,6 @@ Fenster mit Werten von ausgewählten Token
 TODO: 
 * Fehlende Vor-/Nachteile, Rituale/Lieder/Flüche/..., Waffenlose Manöver/Stile, ... einfügen
 
-## Bibliothek
-* würfelt auf Tabellen nach WdZ 104
 
 ## Gruppen-Talentwurf
 
