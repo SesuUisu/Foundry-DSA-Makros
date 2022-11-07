@@ -30,9 +30,9 @@ async function main() {
             <form action"#">
                  <label for="dk_choice">Waffe ist</label>
                  <select name="dk_choice" id="dk_choice" style="float:right">
-                    <option value="0">passend</option>
                     <option value="-2">zwei oder mehr Kategorien zu kurz</option>
                     <option value="-1">eine Kategorie zu kurz</option>
+                    <option value="0" selected>passend</option>
                     <option value="1">eine Kategorie zu lang</option>
                     <option value="2">zwei oder mehr Kategorien zu lang</option>
                  </select>
