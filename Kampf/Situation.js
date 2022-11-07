@@ -20,13 +20,14 @@ async function main() {
     //Dialog-input
     const divFlexStart = "<div style='display:flex'><span style='flex:1'>";
     const divFlexEnd = "</span></div>";
-    const divInputNumber = "type='number' style='width:50px;float:right' value=0 />";
     const divInputBox = "type='checkbox' style='width:70px;float:right' />";
 
 
     ////Number inputs
     const headerDialog = "<h2> Kampf Situation für <i>" + tokenName + "</i></h2>";
 
+    const scene_darkness = Math.round(Number(canvas.scene.darkness)*16) || 0;
+    const divInputNumber = "type='number' style='width:50px;float:right' value="+scene_darkness + " />";
 
     const lightDialog = divFlexStart + "Dunkelheit: <input id='darkness' min='0' " + divInputNumber + divFlexEnd;
     const invisibleDialog = divFlexStart + "Kampf gegen Unsichtbare <input id='invisible'" + divInputBox + divFlexEnd;
