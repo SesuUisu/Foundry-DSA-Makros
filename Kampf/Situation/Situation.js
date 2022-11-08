@@ -26,10 +26,6 @@ async function main() {
     ////Number inputs
     const headerDialog = "<h2> Kampf Situation für <i>" + tokenName + "</i></h2>";
 
-    const scene_darkness = Math.round(Number(canvas.scene.darkness)*16) || 0;
-    const divInputNumber = "type='number' style='width:50px;float:right' value="+scene_darkness + " />";
-
-    const lightDialog = divFlexStart + "Dunkelheit: <input id='darkness' min='0' " + divInputNumber + divFlexEnd;
     const invisibleDialog = divFlexStart + "Kampf gegen Unsichtbare <input id='invisible'" + divInputBox + divFlexEnd;
     const waterDialog = divFlexStart + `
             <form action"#">
@@ -68,7 +64,7 @@ async function main() {
 
     new Dialog({
         title: "Kampf Situation",
-        content: headerDialog + lightDialog + invisibleDialog + waterDialog + position_self_Dialog + position_enemy_Dialog + flyingDialog,
+        content: headerDialog  + invisibleDialog + waterDialog + position_self_Dialog + position_enemy_Dialog + flyingDialog,
         buttons: {
             close: {
                 icon: '<i class="fas fa-times"></i>', label: "Schließen"
@@ -89,43 +85,22 @@ async function main() {
 
     async function htmlCallback(html) {
         const invisble_enemy = Boolean(html.find("#invisible")[0]?.checked || false);
-        const darkness = Number(html.find("#darkness")[0]?.value || 0);
         const water_fight = Number(html.find("#water_combat")[0]?.value || 0);
         const water_label= html.find("#water_combat")[0]?.selectedOptions[0]?.label;
         const self_position = Number(html.find("#combat_self_position")[0]?.value || 0);
         const enemy_position = Number(html.find("#combat_enemy_position")[0]?.value || 0);
         const flying_enemy = Boolean(html.find("#flying")[0]?.checked || false);
 
-        await applyEffect(token, invisble_enemy, darkness, water_fight, water_label,self_position, enemy_position, flying_enemy);
+        await applyEffect(token, invisble_enemy, water_fight, water_label,self_position, enemy_position, flying_enemy);
     }
 
-    async function applyEffect(token, invisble_enemy, darkness, water_fight,water_label, self_position, enemy_position, flying_enemy) {
+    async function applyEffect(token, invisble_enemy, water_fight,water_label, self_position, enemy_position, flying_enemy) {
         // Wege des Entdeckers s. 136
         let at_mod = 0;
         let pa_mod = 0;
         let fk_mod = 0;
         let situation = "" ;
-        if (darkness > 0) {
-            const nachtsicht_ad = token.actor.items.find(item => item.name === "Nachtsicht");
-            const daemmerungssicht_ad = token.actor.items.find(item => item.name === "Dämmerungssicht");
-            situation += "Dunkelheitsstufe: " + darkness;
-            if (nachtsicht_ad && darkness<16) {
-                at_mod -= Math.min(Math.round(Math.floor(darkness / 2)/2),2);
-                pa_mod -= Math.min(Math.round(Math.ceil(darkness / 2)/2),2);
-                fk_mod -= Math.min(Math.round(darkness/2),5);
-                situation += " (Nachtsicht)"
 
-            } else if(daemmerungssicht_ad && darkness<16){
-                at_mod -= Math.round(Math.floor(darkness / 2)/2);
-                pa_mod -= Math.round(Math.ceil(darkness / 2)/2);
-                fk_mod -= Math.round(darkness/2);
-                situation += " (Dämmerungssicht)"
-            } else {
-                at_mod -= Math.floor(darkness / 2);
-                pa_mod -= Math.ceil(darkness / 2);
-                fk_mod -= darkness;
-            }
-        }
         if (invisble_enemy) {
             at_mod -= 6;
             pa_mod -= 6;
