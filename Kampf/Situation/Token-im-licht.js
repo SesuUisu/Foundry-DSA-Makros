@@ -54,6 +54,5 @@ function main() {
             activatedLight.push(trueLight);
         }
     }
-console.log(activatedLight);
     return activatedLight;
 }
