@@ -1,4 +1,4 @@
-// Token im Licht v0.0.1 
+// Token im Licht v0.0.2 
 /* überprüft, ob ein Token im Licht steht */
 
 return main();
@@ -11,8 +11,9 @@ function main() {
     const tokenLights = canvas.scene.tokens;
 
     const gridSize = canvas.dimensions.size;
-    let luminosity = 0;
-
+    let activatedLight = [];
+    
+    //Lichter aus Szene
     sceneLights.forEach(checkSceneLights);
 
     function checkSceneLights(lights) {
@@ -24,20 +25,16 @@ function main() {
 
         let brightTrue = (circleCalc < lightRadiusBright) ? 1 : 0;
         let dimTrue = (circleCalc < lightRadiusDim) ? 1 : 0;
-
-        let altLuminosity = luminosity;
-        if (dimTrue === 1) {
-            if (brightTrue === 1) {
-                luminosity = lights.config.luminosity;
-            } else {
-                luminosity = lights.config.luminosity / 2;
-            }
-        } else {
-            luminosity = 0;
+        
+        if(brightTrue === 1 || dimTrue === 1){
+            locLight = (brightTrue === 1) ? "bright" : "dim";
+            luminosity = lights.config.luminosity;
+            trueLight = {"location":locLight,"radiusBright":lightRadiusBright/100,"radiusDim":lightRadiusDim/100,"luminosity":luminosity};
+           activatedLight.push(trueLight);
         }
-        luminosity = (altLuminosity >= luminosity) ? altLuminosity : luminosity;
     }
 
+    //Lichter von Token-Lichtquellen
     tokenLights.forEach(checkTokenLights);
 
     function checkTokenLights(lights) {
@@ -49,21 +46,14 @@ function main() {
 
         let brightTrue = (circleCalc < lightRadiusBright) ? 1 : 0;
         let dimTrue = (circleCalc < lightRadiusDim) ? 1 : 0;
-
-        let altLuminosity = luminosity;
-        if (dimTrue === 1) {
-            if (brightTrue === 1) {
-                luminosity = lights.light.luminosity;
-            } else {
-                luminosity = lights.light.luminosity / 2;
-            }
-
-        } else {
-            luminosity = 0;
+        
+        if(brightTrue === 1 || dimTrue === 1){
+            locLight = (brightTrue === 1) ? "bright" : "dim";
+            luminosity = lights.light.luminosity;
+            trueLight = {"location":locLight,"radiusBright":lightRadiusBright/100,"radiusDim":lightRadiusDim/100,"luminosity":luminosity};
+            activatedLight.push(trueLight);
         }
-
-        luminosity = (altLuminosity >= luminosity) ? altLuminosity : luminosity;
     }
-    const luminosityLevel = Math.round(luminosity * 16);
-    return luminosityLevel;
+console.log(activatedLight);
+    return activatedLight;
 }
