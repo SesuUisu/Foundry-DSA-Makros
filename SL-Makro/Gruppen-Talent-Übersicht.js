@@ -1,4 +1,4 @@
-//Gruppenübersicht v0.0.6
+//Gruppenübersicht v0.0.7
 
 main();
 
@@ -30,7 +30,7 @@ async function main() {
     const gift = ["Empathie","Gefahreninstinkt","Geräuschhexerei","Magiegespür","Prophezeien","Tierempathie","Zwergnase"]
     const advantage = ["Adlige Abstammung","Adliges Erbe","Amtsadel","Affinität zu Geistern","Affinität zu Elementaren","Affinität zu Dämonen","Akademische Ausbildung (Gelehrter)","Akademische Ausbildung (Magier)","Akademische Ausbildung (Krieger)","Altersresistenz","Astrale Regeneration","Astralmacht","Ausdauernd","Ausdauernder Zauberer","Ausrüstungsvorteil","Balance","Beidhändig","Beseelte Knochenkeule","Besonderer Besitz","Breitgefächerte Bildung","Dämmerungssicht","Eidetisches Gedächtnis","Eigeboren","Eisenaffine Aura","Eisern","Entfernungssinn","Ererbte Knochenkeule","Feenfreund","Feste Matrix","Flink","Gebildet","Geweiht","Glück","Glück im Spiel","Gut Aussehend","Guter Ruf","Gutes Gedächtnis","Halbzauberer","Herausragende Balance","Herausragender Sechster Sinn","Herausragender Sinn Gehör","Herausragender Sinn Sicht","Herausragender Sinn Tastsinn","Herausragender Sinn Geruchssinn","Herausragendes Aussehen","Hitzeresistenz","Hohe Lebenskraft","Hohe Magieresistenz","Immunität","Innerer Kompass","Kälteresistenz","Kampfrausch","Koboldfreund","Linkshänder","Machtvoller Vertrauter","Magiedilettant","Nachtsicht","Natürliche Waffen 1W6","Natürliche Waffen 1W6+1","Natürlicher Rüstungsschutz","Resistenz", "Richtungssinn","Schlangenmensch","Schnelle Heilung","Schutzgeist","Schwer zu verzaubern","Soziale Anpassungsfähigkeit","Tierfreund","Verbindungen","Verhüllte Aura","Veteran","Viertelzauberer","Vollzauberer","Vom Schicksal begünstigt","Wesen der Nacht","Wohlklang","Wolfskind","Zäher Hund","Zauberhaar","Zeitgefühl","Zusätzliche Gliedmaßen Arme","Zusätzliche Gliedmaßen Armpaar","Zusätzliche Gliedmaßen Balanceschwanz","Zusätzliche Gliedmaßen Beinpaar","Zusätzliche Gliedmaßen Beinpaar (2.)","Zusätzliche Gliedmaßen Beinpaar (3.)","Zusätzliche Gliedmaßen Bemuskelter Schwanz","Zusätzliche Gliedmaßen Flügel","Zusätzliche Gliedmaßen Schwanz","Zweistimmiger Gesang","Zwergnase","Madas Flucht","Wolfsbiss","Wolfssinn","Zahme Magie"];
 //Fehlende Vorteile: Begabungen, Herausragende Eigenschaft, Kräfte-/Talentschub, Übernatürliche Begabung (siehe Zauber), Meisterhandwerk
-    const disadvantage = ["Aberglaube","Albino","Angst vor Feuer","Angst vor Insekten","Angst vor Menschenmassen","Angst vor Nagetieren","Angst vor Pelztieren","Angst vor Reptilien","Angst vor Spinnen","Angst vor Wasser","Animalische Magie","Arkanophobie","Arroganz","Artefaktgebunden","Astraler Block","Autoritätsgläubig","Behäbig","Blutdurst","Blutrausch","Brünstigkeit","Dunkelangst","Einarmig","Einäugig","Einbeinig","Einbildungen","Eingeschränkte Elementarnähe Eis","Eingeschränkte Elementarnähe Erde","Eingeschränkte Elementarnähe Fels","Eingeschränkte Elementarnähe Feuer","Eingeschränkte Elementarnähe Wasser","Eingeschränkter Sinn Gehör","Eingeschränkter Sinn Geruchssinn","Eingeschränkter Sinn Sicht","Eingeschränkter Sinn Tastsinn","Einhändig","Eitelkeit","Elfische Weltsicht","Farbenblind","Feind","Feste Gewohnheit","Festgefügtes Denken","Fettleibig","Fluch der Finsternis","Geiz","Gerechtigkeitswahn","Gesucht","Glasknochen","Goldgier","Größenwahn","Heimwehkrank","Hitzempfindlichkeit","Höhenangst","Impulsiv","Jähzorn","Kälteempfindlichkeit","Kältestarre","Kein Vertrauter","Kleinwüchsig","Körpergebundene Kraft","Krankhafte Reinlichkeit","Krankheitsanfällig","Kristallgebunden","Kurzatmig","Lahm","Lästige Mindergeister","Lichtempfindlich","Lichtscheu","Loyalität","Madas Fluch","Medium","Meeresangst","Miserable Eigenschaft","Mondsüchtig","Moralkodex","Nachtblind","Nahrungsrestriktion","Neid","Neugier","Niedrige Astralkraft","Niedrige Lebenskraft","Niedrige Magieresistenz","Pechmagnet","Platzangst","Prinzipientreue","Rachsucht","Randgruppe","Raubtiergeruch","Raumangst","Rückschlag","Schlafstörungen","Schlafwandler","Schlechte Regeneration","Schlechter Ruf","Schneller Alternd","Schulden","Schwache Ausstrahlung","Schwacher Astralkörper","Schwanzlos","Seffer Manich","Selbstgespräche","Sensibler Geruchssinn","Sippenlosigkeit","Sonnensucht","Speisegebote","Spielsucht","Sprachfehler","Spruchhemmung","Stigma","Streitsucht","Stubenhocker","Sucht","Thesisgebunden","Tollpatsch","Totenangst","Übler Geruch","Unangenehme Stimme","Unansehnlich","Unfähigkeit für","Unfrei","Ungebildet","Unstet","Unverträglichkeit mit verarbeitetem Metall","Vergesslichkeit","Verpflichtung","Verschwendungssucht","Verwöhnt","Vorurteile gegen (Adel)","Vorurteile gegen (Magier)","Vorurteile gegen (Graumagier)","Vorurteile gegen (Schwarzmagier)","Vorurteile gegen (Orks)","Wahnvorstellungen","Wahrer Name","Weltfremd (Adelsherrschaft)","Weltfremd (Besitz)","Weltfremd (Geselligkeit)","Weltfremd (gesellschaftliches Leben)","Weltfremd (Religion)","Weltfremd (städtisches Treiben)","Weltfremd (gesellschaftliches Leben)","Weltfremd (Währung und Geld)"];
+    const disadvantage = ["Aberglaube","Albino","Angst vor Feuer","Angst vor Insekten","Angst vor Menschenmassen","Angst vor Nagetieren","Angst vor Pelztieren","Angst vor Reptilien","Angst vor Spinnen","Angst vor Wasser","Animalische Magie","Arkanophobie","Arroganz","Artefaktgebunden","Astraler Block","Autoritätsgläubig","Behäbig","Blutdurst","Blutrausch","Brünstigkeit","Dunkelangst","Einarmig","Einäugig","Einbeinig","Einbildungen","Eingeschränkte Elementarnähe Eis","Eingeschränkte Elementarnähe Erde","Eingeschränkte Elementarnähe Fels","Eingeschränkte Elementarnähe Feuer","Eingeschränkte Elementarnähe Wasser","Eingeschränkter Sinn Gehör","Eingeschränkter Sinn Geruchssinn","Eingeschränkter Sinn Sicht","Eingeschränkter Sinn Tastsinn","Einhändig","Eitelkeit","Elfische Weltsicht","Farbenblind","Feind","Feste Gewohnheit","Festgefügtes Denken","Fettleibig","Fluch der Finsternis","Geiz","Gerechtigkeitswahn","Gesucht","Glasknochen","Goldgier","Größenwahn","Heimwehkrank","Hitzempfindlichkeit","Höhenangst","Impulsiv","Jähzorn","Kälteempfindlichkeit","Kältestarre","Kein Vertrauter","Kleinwüchsig","Körpergebundene Kraft","Krankhafte Reinlichkeit","Krankheitsanfällig","Kristallgebunden","Kurzatmig","Lahm","Lästige Mindergeister","Lichtempfindlich","Lichtscheu","Loyalität","Madas Fluch","Medium","Meeresangst","Miserable Eigenschaft","Mondsüchtig","Moralkodex","Nachtblind","Nahrungsrestriktion","Neid","Neugier","Niedrige Astralkraft","Niedrige Lebenskraft","Niedrige Magieresistenz","Pechmagnet","Platzangst","Prinzipientreue","Rachsucht","Randgruppe","Raubtiergeruch","Raumangst","Rückschlag","Schlafstörungen","Schlafwandler","Schlechte Regeneration","Schlechter Ruf","Schneller Alternd","Schulden","Schwache Ausstrahlung","Schwacher Astralkörper","Schwanzlos","Seffer Manich","Selbstgespräche","Sensibler Geruchssinn","Sippenlosigkeit","Sonnensucht","Speisegebote","Spielsucht","Sprachfehler","Spruchhemmung","Stigma","Streitsucht","Stubenhocker","Sucht","Thesisgebunden","Tollpatsch","Totenangst","Übler Geruch","Unangenehme Stimme","Unansehnlich","Unfähigkeit für","Unfrei","Ungebildet","Unstet","Unverträglichkeit mit verarbeitetem Metall","Vergesslichkeit","Verpflichtungen","Verschwendungssucht","Verwöhnt","Vorurteile gegen (Adel)","Vorurteile gegen (Magier)","Vorurteile gegen (Graumagier)","Vorurteile gegen (Schwarzmagier)","Vorurteile gegen (Orks)","Wahnvorstellungen","Wahrer Name","Weltfremd (Adelsherrschaft)","Weltfremd (Besitz)","Weltfremd (Geselligkeit)","Weltfremd (gesellschaftliches Leben)","Weltfremd (Religion)","Weltfremd (städtisches Treiben)","Weltfremd (gesellschaftliches Leben)","Weltfremd (Währung und Geld)"];
 //Fehlende Nachteile: Miserable Eigenschaft
 
     const skill = ["Berufsgeheimnis","Fälscher","Meister der Improvisation","Nandusgefälliges Wissen","Rosstäuscher","Kulturkunde (Mittelreich)","Kulturkunde (Almada)","Kulturkunde (Andergast und Nostria)","Kulturkunde (Bornland)","Kulturkunde (Svellttal)","Kulturkunde (Nordlande)","Kulturkunde (Horasreich)","Kulturkunde (Zyklopeninseln)","Kulturkunde (Amazonen)","Kulturkunde (Aranien)","Kulturkunde (Tulamidenlande)","Kulturkunde (Novadi)","Kulturkunde (Ferkina)","Kulturkunde (Zahori)","Kulturkunde (Thorwal)","Kulturkunde (Gjalskerländer)","Kulturkunde (Fjarninger)","Kulturkunde (Waldmenschen)","Kulturkunde (Tocamuyac)","Kulturkunde (Maraskan)","Kulturkunde (Südaventurien)","Kulturkunde (Bukanier)","Kulturkunde (Nivesen)","Kulturkunde (Norbarden)","Kulturkunde (Trollzacker)","Kulturkunde (Schwarze Lande)","Kulturkunde (Ambosszwerge)","Kulturkunde (Brillantzwerge)","Kulturkunde (Erzzwerge)","Kulturkunde (Hügelzwerge)","Kulturkunde (Brobim)","Kulturkunde (Auelfen)","Kulturkunde (Waldelfen)","Kulturkunde (Firnelfen)","Kulturkunde (Steppenelfen)","Kulturkunde (Orks)","Kulturkunde (Goblins)","Kulturkunde (Archaische Achaz)","Kulturkunde (Stammes-Achaz)","Kulturkunde (Trolle)","Kulturkunde (Grolme)","Dschungelkundig","Eiskundig","Gebirgskundig","Höhlenkundig","Maraskankundig","Meereskundig","Steppenkundig","Sumpfkundig","Waldkundig","Wüstenkundig"];
@@ -43,6 +43,7 @@ async function main() {
     const vantageList = advantage.concat(disadvantage);
     const attribute = ["courage","cleverness","intuition","charisma","dexterity","agility","constitution","strength"];
     const resources = ["vitality","endurance","astralEnergy","karmicEnergy"]
+    const bioList = ["Rasse","Kultur","Profession","Sozialstatus","Adel","Titel","GS"]
 
     tokenList = [];
     talentValueList = {};
@@ -63,7 +64,10 @@ async function main() {
     countAtt = 0;
     resValueList = {};
     countRes = 0;
+    socValueList = {};
+    countSoc = 0;
 
+            console.log(socValueList)
        
     //Funktionen
     ////Abfrage pro Charakter
@@ -73,6 +77,42 @@ async function main() {
         tokenName = token.name
         tokenShortName = tokenName.split(" ")[0];
         tokenList.push(tokenShortName);
+        
+        //Soziales
+        bioList.forEach(bioCheck);
+        function bioCheck(bioName){
+            switch(bioName){
+                case "Rasse":
+                    socialValue = token.actor.system.base.race;
+                    break;
+                case "Kultur":
+                    socialValue = token.actor.system.base.culture;
+                    break;
+                case "Profession":
+                    socialValue = token.actor.system.base.profession;
+                    break;
+                case "Sozialstatus":
+                    socialValue = Number(token.actor.system.base.social.social_status.value);
+                    break;
+                case "Adel":
+                    socialValue = token.actor.system.base.social.nobility;
+                    break;
+                case "Titel":
+                    socialValue = token.actor.system.base.social.titles;
+                    break;
+                case "GS":
+                    socialValue = token.actor.system.base.movement.speed.value;
+                    break;
+            };
+            
+            socialValue = (socialValue === 0)? undefined: socialValue;
+            if(countSoc < bioList.length){
+                countSoc += 1;
+                socValueList[bioName] = [];
+            };
+            socValueName = socValueList[bioName];
+            socValueName.push(socialValue);
+        };
         
         //Resourcen
         resources.forEach(checkRes)
@@ -86,7 +126,6 @@ async function main() {
             };
             resValueName = resValueList[resName];
             resValueName.push(resValue);
-            
         };
 
         //Eigenschaften
@@ -285,6 +324,7 @@ async function main() {
     
     //Detail-Boxen einfügen für alle Kategorien
     
+    socOutput = textDetailStart + "Bio" + textDetailMid;
     resOutput = textDetailStart + "Energien" + textDetailMid;
     attOutput = textDetailStart + "Eigenschaften" + textDetailMid;
     fightOutput = textDetailStart + "Nahkampf" + textDetailMid; 
@@ -313,6 +353,7 @@ async function main() {
     function addName(tokenShortName){
         nameAdd += th + tokenShortName + eth;
     };
+        socOutput += nameAdd + etr;
         resOutput += nameAdd + etr;
         attOutput += nameAdd + etr; 
         fightOutput += nameAdd + etr; 
@@ -332,7 +373,7 @@ async function main() {
         skillOutput += nameAdd + etr;
         magskillOutput += nameAdd + etr;
         combatskillOutput += nameAdd + etr;
-    
+
 
     //Sortierfunktion
     
@@ -400,6 +441,27 @@ async function main() {
             };            
         };
     };
+    
+    Object.keys(socValueList).forEach(outputSocFunction);
+    function outputSocFunction(talentName){
+        talentValueOutput = "";
+        countUndefined = 0;
+        for (let i = 0; i < tokenLength; i++){
+            talentValueSingle = socValueList[talentName][i];
+            if(talentValueSingle == undefined){
+                talentValueSingle = "&nbsp;"
+                countUndefined += 1;
+            };
+            highValue = socValueList[talentName]
+            tdColor = (Math.max(...highValue.filter(Number.isFinite))=== talentValueSingle)? tdMax : (Math.min(...highValue.filter(Number.isFinite))===talentValueSingle)? tdMin : td;
+            talentValueOutput += tdColor + talentValueSingle + etd;
+        };
+        if(countUndefined < tokenLength){
+            talentAdd = tr + tdl + talentName + etd + talentValueOutput + etr;
+            socOutput += talentAdd;
+        };
+    };    
+    
     
     Object.keys(resValueList).forEach(outputResFunction);
     function outputResFunction(talentName){
@@ -602,6 +664,7 @@ async function main() {
         };
     };
     //Schließen der Detailbox
+    socOutput += textDetailEnd;
     resOutput += textDetailEnd;
     attOutput += textDetailEnd;
     fightOutput += textDetailEnd; 
@@ -630,10 +693,10 @@ async function main() {
     }
     </style>`
 
-    dialogInput = resOutput + attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + combatskillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
+    dialogInput = socOutput + resOutput + attOutput + advantageOutput + disadvantageOutput + "<hr>" + skillOutput + combatskillOutput + magskillOutput + "<hr>" + fightOutput + longrangeOutput + physicalOutput + socialOutput + natureOutput + knownOutput + labourOutput + langueOutput + scriptOutput + "<hr>" + spellOutput + ritualknownOutput + giftOutput + dialogButton;
     
     
-    windowWidth = tokenLength * 60 + 180
+    windowWidth = tokenLength * 140 + 180
     const myDialogOptions = {
         height: 600,
         width: windowWidth
