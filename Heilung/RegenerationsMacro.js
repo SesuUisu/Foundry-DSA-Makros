@@ -1,4 +1,4 @@
-//Nächtliche Regeneration v0.9.3
+//Nächtliche Regeneration v0.9.4
 /**
  Makro zur Vereinfachung der nächtlichen Regeneration
  Berücksichtigt Vorteile (Schnelle Heilung, Astrale Regeneration), Nachteile (Verwöhnt, Schlechte Heilung, Astraler Block, Schlafwandler, Schlafstörung), Sonderfertigkeit (Regeneration) sowie äußere Einflusse (Schlafplatz, Wachehalten, Ruhestörung, Erkrankung) - werden automatisch ausgewählt, wenn im Token oder Actor angelegt sind.
@@ -185,7 +185,7 @@ table.draw();
     }
 
     function createVerwohntDialog(verwohnt) {
-        const verwohntValue = Number(verwohnt?.data.value || 0);
+        const verwohntValue = Number(verwohnt?.system.value || 0);
         return divFlexStart + `
 				<form action"#">
 					<label for="tantrum">Verwöhnt</label>
@@ -215,7 +215,7 @@ table.draw();
         let schlHeilCheck = schlHeil ? divInputChecked : divInputUnchecked;
         const schlHeilDialog = divFlexStart + "Schlechte Heilung <input id='badReg'" + divInputBox + schlHeilCheck + divFlexEnd;
         // Schnelle Heilung
-        const schnHeilValue = Number(schnHeil?.data.value || 0);
+        const schnHeilValue = Number(schnHeil?.system.value || 0);
 
 
         const schnHeilDialog = divFlexStart + ` 
@@ -243,7 +243,7 @@ table.draw();
         const astraBlockDialog = divFlexStart + "Astraler Block <input id='astraBlock'" + divInputBox + astraBlockCheck + divFlexEnd;
 
         // Astrale Regeneration
-        let astraRegValue = astraReg?.data.value || 0;
+        let astraRegValue = astraReg?.system.value || 0;
         let astraRegSel0 = "";
         let astraRegSel1 = "";
         let astraRegSel2 = "";
