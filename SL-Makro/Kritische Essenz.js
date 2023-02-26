@@ -1,6 +1,6 @@
 main();
 
-//Kritische Essenz v0.0.3
+//Kritische Essenz v0.0.4
 
 async function main() {
     const currentRollMode = game.settings.get("core","rollMode");
@@ -24,7 +24,7 @@ async function main() {
     inputDialog += divFlexStart + `
             <form action"#">
                  <label for="sfAd">Kraftlinienmagie:</label>
-                 <select name="sfAd" id="sfAd" style="float:right">
+                 <select name="sfAd" id="sfAd" style="width:50px;float:right">
                     <option value="0">-</option>
                     <option value="1">I</option>
                     <option value="2">II</option>
@@ -34,7 +34,7 @@ async function main() {
     inputDialog += divFlexStart + `
             <form action"#">
                  <label for="ritAd">Großritual:</label>
-                 <select name="ritAd" id="ritAd" style="float:right">
+                 <select name="ritAd" id="ritAd" style="width:50px;float:right">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
