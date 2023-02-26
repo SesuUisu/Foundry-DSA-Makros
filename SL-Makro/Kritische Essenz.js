@@ -1,9 +1,10 @@
 main();
 
-//Kritische Essenz v0.0.1
+//Kritische Essenz v0.0.3
 
 async function main() {
     const currentRollMode = game.settings.get("core","rollMode");
+    numRoll = [];
     
     //Dialog-input
     ////general use
@@ -16,7 +17,7 @@ async function main() {
     const divInputChecked = "checked />";
     
     
-    headerDialog = "<h3>Kritische Essenz</h3>";
+    const headerDialog = "<h3>Kritische Essenz</h3>";
     inputDialog = headerDialog;
     inputDialog += divFlexStart + "Kraftlinienstärke: <input id='modValue'" + divInputNumber  + "1'/>" + divFlexEnd;
     inputDialog += divFlexStart + "verwendete AsP: <input id='aspValue'" + divInputNumber  + "1'/>" + divFlexEnd + hr;
@@ -66,19 +67,15 @@ async function main() {
         close: () => console.log()
     }).render(true);
     
-    async function rolling(sfInput,critValue){
+    async function rolling(sfInput,critValue,numRoll){
         const typRoll = new Roll("1d20");
         typRoll.roll({async: true});
         const typResult = Number(typRoll.result);
+        numRoll.push(typResult)
         
         if((typResult >= 19 && sfInput === 0) || typResult === 20){
-            critValue += typResult;
-            
-            rolling(sfInput,critValue)
-        } else {
-            critValue += typResult;
+            rolling(sfInput,critValue,numRoll)
         }
-        return critValue
     }
     
     async function htmlCallback(html){
@@ -88,7 +85,12 @@ async function main() {
         const aspInput = Number(html.find("#aspValue")[0]?.value || 0);
         critValue = 0;
         
-        critValue = await rolling(sfInput,critValue);
+        critValueF = await rolling(sfInput,critValue,numRoll);
+        
+        
+        critValue = numRoll.reduce(function(a,b){
+            return a + b;
+        });
         
         critValue += modInput + Math.round(aspInput/10) + ritInput;
         critValue += (sfInput === 1) ? -5 : 0; 
@@ -101,7 +103,9 @@ async function main() {
         const critResult = await typ.getResultsForRoll(critValue);
         const critResultDat = critResult[0].text;
         
-        const message = "<b>Nebenwirkung der kritischen Essenz:</b><br>" + critResultDat;
+        const detailsOut = "Wert <i>(Würfel)</i>: " + critValue + " <i>(" + numRoll + ")</i><br>LS/KS: " + modInput + "<br>AsP: " + aspInput + "<br>Kraftlinienmagie: " + sfInput + "<br>Ritual: " + ritInput;
+        
+        const message = "<b>Nebenwirkung der kritischen Essenz:</b><br><details><summary>" + critResultDat + "</summary>" + detailsOut + "</details>";
        
           
         ChatMessage.create({
