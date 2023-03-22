@@ -59,22 +59,34 @@ async function main() {
         const target = Number(html.find("#target")[0].value);
         const maxroll = Number(html.find("#maxroll")[0].value);
         let accum_tap = 0;
-        let nummber_rolls = 0;
-        while (nummber_rolls <= maxroll && accum_tap < target) {
+        let number_rolls = 0;
+        let number_crit_suc =0;
+        let number_crit_fail =0;
+        while (number_rolls < maxroll && accum_tap < target) {
             const result = await rollSkill(item[0], mod);
-            nummber_rolls += 1;
-            console.log(result)
-            if(result.success) {
-                accum_tap += Math.max(Number(result.roll.total),1);
+            number_rolls += 1;
+            showRollToChat(result);
+            if (checkOccurence(result, 20)) {
+                result.success = false;
+                number_crit_fail +=1;
+            } else if (checkOccurence(result, 1)) {
+                result.success = true;
+                accum_tap += Math.max(Number(item[0].system.value), 1);
+                number_crit_suc += 1;
+            } else if (result.success) {
+                accum_tap += Math.max(Number(result.roll.total), 1);
             }
         }
-console.log(nummber_rolls);
-console.log(accum_tap);
 
-
-        //showRollToChat(result);
     }
 
+}
+
+function checkOccurence(result, target) {
+    const roll = result.roll;
+    const dices = roll.dice;
+    const count = dices.filter((dice) => dice.results[0].result === target).length;
+    return count >= 2;
 }
 
 function showRollToChat(result) {
