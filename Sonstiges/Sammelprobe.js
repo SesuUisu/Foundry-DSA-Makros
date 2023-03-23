@@ -25,7 +25,7 @@ async function main() {
                  <label for="talent_choice">Talent: </label>
                  <select name="talent_choice" id="talent_choice" style="float:right">`;
     for (const talent of talents) {
-        talent_dialog += `<option value=${talent._id}> ${talent.name}</option>`;
+        talent_dialog += `<option value=${talent.name}> ${talent.name}</option>`;
     }
 
     talent_dialog += `</select></form>` + divFlexEnd;
@@ -55,7 +55,9 @@ async function main() {
     async function htmlCallback(html) {
 
         const id = html.find("#talent_choice")[0].value;
-        const item = token.document.actorData.items.filter(item => item._id === id);
+        const item = token.actor.items.find(x => x.name === id);
+        console.log(id)
+        console.log(item)
         const mod = Number(html.find("#mod")[0].value);
         const target = Number(html.find("#target")[0].value);
         const maxroll = Number(html.find("#maxroll")[0].value);
@@ -65,7 +67,7 @@ async function main() {
         let number_crit_fail = 0;
         let results = [];
         while (number_rolls < maxroll && accum_tap < target) {
-            const result = await rollSkill(item[0], mod);
+            const result = await rollSkill(item, mod);
             number_rolls += 1;
             //showRollToChat(result);
             if (checkOccurence(result, 20)) {
@@ -73,8 +75,8 @@ async function main() {
                 number_crit_fail += 1;
             } else if (checkOccurence(result, 1)) {
                 result.success = true;
-                accum_tap += Math.max(Number(item[0].system.value), 1);
-                result.roll.total = Math.max(Number(item[0].system.value), 1);
+                accum_tap += Math.max(Number(item.system.value), 1);
+                result.roll.total = Math.max(Number(item.system.value), 1);
                 number_crit_suc += 1;
             } else if (result.success) {
                 accum_tap += Math.max(Number(result.roll.total), 1);
@@ -92,7 +94,7 @@ async function main() {
         let chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker(),
-            flavor: `Sammelprobe ${item[0].name} +${mod} (${item[0].system.value}) ${success}<br>                     
+            flavor: `Sammelprobe ${item.name} +${mod} (${item.system.value}) ${success}<br>                     
                      Versuche: ${number_rolls} von ${maxroll}<br>
                      Kritische Erfolge: ${number_crit_suc}<br>
                      Kritische Fehlschläge: ${number_crit_fail}
@@ -179,11 +181,11 @@ function showRollToChat(result) {
 }
 
 function getTalents(token) {
-    return token.document.actorData.items.filter(item => item.type === "talent");
+    return token.actor.items.filter(item => item.type === "talent");
 }
 
 function getSpells(token) {
-    return token.document.actorData.items.filter(item => item.type === "spell");
+    return token.actor.items.filter(item => item.type === "spell");
 
 }
 
@@ -196,7 +198,7 @@ async function rollSkill(item, mod) {
         ...options,
         skillName: item.name,
         skillType: item.type,
-        skillValue: item.system.value,
+        skillValue: item.system.value ||0,
         testAttributeData,
         mod: options.mod,
     });
