@@ -13,7 +13,7 @@ async function main() {
     const divFlexStart = "<div style='display:flex'><span style='flex:1'>";
     const divFlexEnd = "</span></div>";
     const divInputNumber = "type='number' style='width:50px;float:right'  />";
-    const leftpoints = game.i18n.localize(`DSA.keepLeftTalentPoints`)
+    const leftpoints = game.i18n.localize(`DSA.keepLeftTalentPoints`);
     //"DSA.keepLeftSpellPoints
 
     ////Number inputs
@@ -56,8 +56,8 @@ async function main() {
 
         const id = html.find("#talent_choice")[0].value;
         const item = token.actor.items.find(x => x.name === id);
-        console.log(id)
-        console.log(item)
+        console.log(id);
+        console.log(item);
         const mod = Number(html.find("#mod")[0].value);
         const target = Number(html.find("#target")[0].value);
         const maxroll = Number(html.find("#maxroll")[0].value);
@@ -84,13 +84,13 @@ async function main() {
             results.push(result);
 
         }
-        const success = game.i18n.localize(accum_tap>=target?"DSA.success":"DSA.failed")
+        const success = game.i18n.localize(accum_tap >= target ? "DSA.success" : "DSA.failed");
         let message = createMeassgeContent(results, leftpoints);
         message += `<div class="dice-roll">
                         <div class="dice-result">                       
                             <h4 class="dice-total ${accum_tap >= target ? "success" : "failure"}">${accum_tap} von ${target} ${leftpoints}</h4>          
                         </div>
-                    </div>`
+                    </div>`;
         let chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker(),
@@ -144,8 +144,8 @@ function createMeassgeContent(results, leftpoints) {
         });
 
         for (const d of c) {
-            const attr_name= game.i18n.localize(
-                `DSA.${d[1].name}_abbr`)
+            const attr_name = game.i18n.localize(
+                `DSA.${d[1].name}_abbr`);
             acc += `<div class="dice-total roll-row" style="line-height:16px;" >
                 <div class="roll" style="font-size:var(--font-size-16);">${d[0].total}</div>
                 <div class="roll-info">${attr_name} (${d[1].value})</div>
@@ -181,11 +181,27 @@ function showRollToChat(result) {
 }
 
 function getTalents(token) {
-    return token.actor.items.filter(item => item.type === "talent");
+    let talents = token.actor.items.filter(item => item.type === "talent");
+    const cat = {
+        'physical': 1,
+        'social': 2,
+        'nature': 3,
+        'knowledge': 4,
+        'language': 5,
+        'crafting': 6,
+        'karma': 7,
+        'gift': 8,
+    };
+
+    talents.sort((a, b) => ((cat[a.system.category] || 9) - (cat[b.system.category] || 9)) || a.name.localeCompare(b.name));
+
+    return talents;
 }
 
 function getSpells(token) {
-    return token.actor.items.filter(item => item.type === "spell");
+    let spells = token.actor.items.filter(item => item.type === "spell");
+    spells.sort((a, b) => a.name.localeCompare(b.name));
+    return spells;
 
 }
 
@@ -198,7 +214,7 @@ async function rollSkill(item, mod) {
         ...options,
         skillName: item.name,
         skillType: item.type,
-        skillValue: item.system.value ||0,
+        skillValue: item.system.value || 0,
         testAttributeData,
         mod: options.mod,
     });
