@@ -12,8 +12,9 @@ async function main() {
 
     const divFlexStart = "<div style='display:flex'><span style='flex:1'>";
     const divFlexEnd = "</span></div>";
-    const divInputNumber = "type='number' style='width:50px;float:right' value=0 />";
-
+    const divInputNumber = "type='number' style='width:50px;float:right'  />";
+    const leftpoints = game.i18n.localize(`DSA.keepLeftTalentPoints`)
+    //"DSA.keepLeftSpellPoints
 
     ////Number inputs
     const headerDialog = "<h2>Sammelprobe für <i>" + token.name + "</i></h2>";
@@ -28,9 +29,9 @@ async function main() {
     }
 
     talent_dialog += `</select></form>` + divFlexEnd;
-    talent_dialog += divFlexStart + "Modifikator <input id='mod'" + divInputNumber + divFlexEnd;
-    talent_dialog += divFlexStart + "Ziel TaP* <input id='target'" + divInputNumber + divFlexEnd;
-    talent_dialog += divFlexStart + "Maximale Anzahl an Würfen <input id='maxroll'" + divInputNumber + divFlexEnd;
+    talent_dialog += divFlexStart + "Modifikator <input id='mod' value=0 " + divInputNumber + divFlexEnd;
+    talent_dialog += divFlexStart + `Ziel ${leftpoints} <input id='target' value=10 min='1'` + divInputNumber + divFlexEnd;
+    talent_dialog += divFlexStart + "Maximale Anzahl an Würfen <input id='maxroll' value=10 min='1'" + divInputNumber + divFlexEnd;
 
 
     new Dialog({
@@ -81,21 +82,30 @@ async function main() {
             results.push(result);
 
         }
-
-
+        const success = game.i18n.localize(accum_tap>=target?"DSA.success":"DSA.failed")
+        let message = createMeassgeContent(results, leftpoints);
+        message += `<div class="dice-roll">
+                        <div class="dice-result">                       
+                            <h4 class="dice-total ${accum_tap >= target ? "success" : "failure"}">${accum_tap} von ${target} ${leftpoints}</h4>          
+                        </div>
+                    </div>`
         let chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker(),
-            flavor: `Sammelprobe ${item[0].name} +${mod} (${item[0].system.value}) [${target} TaP* / ${maxroll}]`,
-            content: createMeassgeContent(results, accum_tap, number_rolls, number_crit_suc, number_crit_fail)
+            flavor: `Sammelprobe ${item[0].name} +${mod} (${item[0].system.value}) ${success}<br>                     
+                     Versuche: ${number_rolls} von ${maxroll}<br>
+                     Kritische Erfolge: ${number_crit_suc}<br>
+                     Kritische Fehlschläge: ${number_crit_fail}
+                        `,
+            content: message
         };
         ChatMessage.create(chatData, {});
 
     }
 }
 
-function createMeassgeContent(results, accum_tap, number_rolls, number_crit_suc, number_crit_fail) {
-    const content = results.reduce((acc, result) => {
+function createMeassgeContent(results, leftpoints) {
+    let content = results.reduce((acc, result) => {
         let section = result.roll.dice.reduce((acc, dice) => {
             let rollDiceParts = `${dice.number}d${dice.faces}`;
             let diceTotal = dice.results.reduce((acc, die) => {
@@ -132,9 +142,11 @@ function createMeassgeContent(results, accum_tap, number_rolls, number_crit_suc,
         });
 
         for (const d of c) {
-            acc += `<div class="dice-total roll-row">
-                <div class="roll ">${d[0].total}</div>
-                <div class="roll-info">${d[1].name} (${d[1].value})</div>
+            const attr_name= game.i18n.localize(
+                `DSA.${d[1].name}_abbr`)
+            acc += `<div class="dice-total roll-row" style="line-height:16px;" >
+                <div class="roll" style="font-size:var(--font-size-16);">${d[0].total}</div>
+                <div class="roll-info">${attr_name} (${d[1].value})</div>
             </div>`;
         }
         //<div class="dice-formula">${rollFormula}</div>;
@@ -142,7 +154,7 @@ function createMeassgeContent(results, accum_tap, number_rolls, number_crit_suc,
                 <div class="dice-tooltip" style="display:none;">
                         ${section}
                     </div>
-                    <h4 class="dice-total">${result.roll.total}</h4>
+                    <h5 class="dice-total" style="font-size:var(--font-size-16);" >${result.roll.total} ${leftpoints}</h5>
                 </div>
             </div>
         `;
