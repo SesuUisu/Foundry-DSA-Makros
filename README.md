@@ -59,6 +59,10 @@ Makro zum Würfeln von Gruppenwürfen auf
 * Sinnenschärfe
 * Eigenschaften (inkl. MR)
 
+#Sonstiges
+* GS-Eingabe
+* TaP-Sammelproben
+
 # Zaubereffekte
 * Adlerschwinge (für Silberwolf mit Hausregeln)
 * Armatrutz
