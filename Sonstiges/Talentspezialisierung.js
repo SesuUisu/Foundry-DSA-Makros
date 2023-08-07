@@ -10,8 +10,8 @@ async function main () {
     ui.notifications.error('Bitte einen Token auswählen.')
     return
   }
-  const spez= getSpez(token)
-  const talents = getTalents(token,spez)
+  const spez = getSpez(token)
+  const talents = getTalents(token, spez)
 
   const divFlexStart = "<div style='display:flex'><span style='flex:1'>"
   const divFlexEnd = '</span></div>'
@@ -76,16 +76,20 @@ function getSpez (token) {
   const spezialisierung = token.actor.items.filter(item =>
     item.name.match('spezialisierung')
   )
-  return talent_spezialisierung.map(x =>
+  return spezialisierung.map(x =>
     /spezialisierung ([\p{Letter}\s]+)/u.exec(x.name)[1].trim()
   )
 }
 
 function getTalents (token, spez) {
-  const checked =['talent','spell','combatTalent']
-  let talents = token.actor.items.filter(
-    item => checked.includes(item.type) && spez.includes(item.name) && item.system.category != 'combat'
-  )
+  const checked = ['talent', 'spell']
+  let talents = token.actor.items.filter(function (item) {
+    if (checked.includes(item.type)) {
+      let test = (x) => item.name.match(x)
+      return spez.some(test)
+    }
+    return false
+  })
 
   const cat = {
     physical: 1,
@@ -114,9 +118,9 @@ async function rollSkill (item, mod) {
 
   const rollResultPromise = _rollSkill.execute({
     ...options,
-    skillName: item.name.concat(" ","(Spez)"),
+    skillName: item.name.concat(' ', '(Spez)'),
     skillType: item.type,
-    skillValue: (item.system.value +2) || 0,
+    skillValue: item.system.value + 2 || 0,
     testAttributeData,
     mod: options.mod
   })
