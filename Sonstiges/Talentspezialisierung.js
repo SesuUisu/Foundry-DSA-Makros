@@ -63,7 +63,8 @@ async function main () {
     const id = html.find('#talent_choice')[0].value
     const item = token.actor.items.find(x => x.name === id)
     const mod = Number(html.find('#mod')[0].value)
-    const result = await rollSkill(item, mod)
+    const character = { data: token.actor, ruleset: game.ruleset }
+    const result = await rollSkill(item, mod, character)
     showRollToChat(result)
   }
 }
@@ -85,7 +86,7 @@ function getTalents (token, spez) {
   const checked = ['talent', 'spell']
   let talents = token.actor.items.filter(function (item) {
     if (checked.includes(item.type)) {
-      let test = (x) => item.name.match(x)
+      let test = x => item.name.match(x)
       return spez.some(test)
     }
     return false
@@ -111,12 +112,13 @@ function getTalents (token, spez) {
   return talents
 }
 
-async function rollSkill (item, mod) {
+async function rollSkill (item, mod, character) {
   const testAttributeData = getTestAttributeData(item)
   const options = { mod: mod }
   const _rollSkill = game.ruleset.actions.get('rollSkill')
 
   const rollResultPromise = _rollSkill.execute({
+    character: character,
     ...options,
     skillName: item.name.concat(' ', '(Spez)'),
     skillType: item.type,
