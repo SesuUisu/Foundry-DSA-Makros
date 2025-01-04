@@ -65,6 +65,7 @@ async function main () {
     const mod = Number(html.find('#mod')[0].value)
     const character = { data: token.actor, ruleset: game.ruleset }
     const result = await rollSkill(item, mod, character)
+    console.log(result)
     showRollToChat(result)
   }
 }
@@ -114,24 +115,25 @@ function getTalents (token, spez) {
 
 async function rollSkill (item, mod, character) {
   const testAttributeData = getTestAttributeData(item)
-  const options = { mod: mod }
+  const modifiers = new Map()
+  modifiers.set('custom', { name: 'custom', modifierType: 'other', mod: mod })
+  const options = { modifiers: modifiers }
   const _rollSkill = game.ruleset.actions.get('rollSkill')
 
   const rollResultPromise = _rollSkill.execute({
     character: character,
-    ...options,
     skillName: item.name.concat(' ', '(Spez)'),
     skillType: item.type,
+    ...options,
     skillValue: item.system.value + 2 || 0,
-    testAttributeData,
-    mod: options.mod
+    testAttributeData
   })
+
   return rollResultPromise.then(rollResult => ({
-    mod: options.mod || 0,
+    mod: rollResult.mod || 0,
     roll: rollResult.roll,
     success: rollResult.success,
     options: {
-      ...options,
       ...rollResult.options
     }
   }))
